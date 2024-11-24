@@ -1,35 +1,47 @@
-'use client';
+// app/users/page.tsx
 
-import React, { useEffect } from 'react';
+import { User } from '@/app/api/users/route'; // Optional: Create a User type for better type safety
 
-const Page = () => {
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch('/api/users'); // Fetch data from the API
-        if (!response.ok) {
-          throw new Error('Failed to fetch users');
-        }
-        const data = await response.json();
-        console.log('Fetched users:', data); // Log the raw JSON data in the console
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          console.error('Error fetching users:', error.message);
-        } else {
-          console.error('An unknown error occurred');
-        }
-      }
-    };
+// Define a type for the user data (customize fields as needed)
+/*interface User {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  permission: string;
+}*/
 
-    fetchUsers();
-  }, []);
+// Function to fetch data from the API
+async function fetchData(): Promise<User[]> {
+  const response = await fetch('http://localhost:3000/api/users', {
+    cache: 'no-store',  // Prevent caching for dynamic data
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch users');
+  }
+  return response.json();
+}
+
+export default async function UsersPage() {
+  let data: User[];
+  try {
+    data = await fetchData();  // Fetch data on the server
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return <p>Error: {(error as Error).message}</p>;
+  }
 
   return (
     <div>
-      <h1>Check Database Connection</h1>
-      <p>Open the console to view the raw JSON data from the database.</p>
+      <h1>User List</h1>
+      <ul>
+        {data.map((user) => (
+          <li key={user.id}>
+            {user.first_name} {user.last_name} ({user.email})
+          </li>
+        ))}
+      </ul>
     </div>
   );
-};
-
-export default Page;
+}

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import pool from '@/app/lib/db';
 
 // Define the User type for the result rows
-interface User {
+export interface User {
   id: string;
   email: string;
   password: string;
