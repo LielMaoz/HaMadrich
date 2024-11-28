@@ -3,7 +3,6 @@ import { jwtVerify } from 'jose'; // For verifying JWT
 
 export async function middleware(request: Request) {
   const token = request.headers.get('Authorization')?.split(' ')[1];
-  console.log(token);
   if (!token) {
     return new NextResponse('Unauthorized', { status: 401 });
   }
@@ -14,7 +13,6 @@ export async function middleware(request: Request) {
 
     // If the token is valid, proceed with the request
     const role = payload.role as String|undefined;
-    console.log("The role is:.... "+role);//////////////////////////////////////////// delete after review.
     if (role !== 'admin') {
       return new NextResponse('Forbidden: Admins only', { status: 403 });
     }
@@ -25,7 +23,7 @@ export async function middleware(request: Request) {
   }
 }
 
-// Protect all /api/users
+// Protect /api/users
 export const config = {
   matcher: '/api/users', 
 };
