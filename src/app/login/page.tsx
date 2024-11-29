@@ -1,9 +1,5 @@
 'use client';
 
-
-import Link from "next/link";
-
-
 const handleLogin = async (email: string, password: string) => {
     const response = await fetch('/api/auth/login', {
       method: 'POST',

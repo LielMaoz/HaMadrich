@@ -12,14 +12,14 @@ export async function middleware(request: Request) {
     const {payload} = await jwtVerify(token, secret); // Verify the JWT
 
     // If the token is valid, proceed with the request
-    const role = payload.role as String|undefined;
+    const role = payload.role as string|undefined;
     if (role !== 'admin') {
       return new NextResponse('Forbidden: Admins only', { status: 403 });
     }
 
     return NextResponse.next();
   } catch (error) {
-    return new NextResponse('Invalid or expired token', { status: 403 });
+    return new NextResponse(`Invalid or expired token: ${error}`, { status: 403 });
   }
 }
 
