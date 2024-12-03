@@ -118,7 +118,6 @@ const signup = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">הרשמה</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700"></label>
             <input
               type="text"
               name="firstName"
@@ -129,7 +128,6 @@ const signup = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700"></label>
             <input
               type="text"
               name="lastName"
@@ -140,7 +138,6 @@ const signup = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700"></label>
             <input
               type="email"
               name="email"
@@ -156,7 +153,6 @@ const signup = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700"></label>
             <div className="relative flex items-center">
               <input
                 type={isPasswordVisible ? 'text' : 'password'}
@@ -181,7 +177,6 @@ const signup = () => {
             )}
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700"></label>
             <div className="relative flex items-center">
               <input
                 type={isConfirmPasswordVisible ? 'text' : 'password'}
