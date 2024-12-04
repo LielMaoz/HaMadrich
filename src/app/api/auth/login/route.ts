@@ -28,7 +28,7 @@ export async function POST(req: Request) {
     process.env.JWT_SECRET || 'default_secret'
   ); // Make sure to set JWT_SECRET in .env file
   const jwt = await new SignJWT({
-    sub: user.email, // The unique user email
+    sub: user.id, // The primary key is ID
     role: user.permission, // User's role (admin, regular)
   })
     .setProtectedHeader({ alg: 'HS256' }) // Set the algorithm
