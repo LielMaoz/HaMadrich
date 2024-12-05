@@ -3,14 +3,14 @@ import { Copyright } from 'lucide-react';
 
 const Footer: React.FC = () => {
     return (
-    <footer className={"fixed bottom-0 w-full bg-green-700 text-white text-center py-3"}>
+    <footer className={"fixed bottom-0 w-full bg-gray-900 text-white text-center py-3"}>
         <p>
             כל הזכויות שמורות לצוות המדריך
             <Copyright className="w-5 h-5 inline mr-2" />
         </p>
         <p>
                 יחד ננצח {" "}
-                <span className="text-blue-500">&#10084;</span> {/*blue heart*/}
+                <span className="text-blue-500">💙</span> {/*blue heart*/}
             </p>
     </footer>
         )
