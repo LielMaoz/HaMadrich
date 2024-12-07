@@ -2,6 +2,7 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { UserAuthData } from '../lib/types';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const signup = () => {
   const [loading, setLoading] = useState(false);
@@ -99,9 +100,7 @@ const signup = () => {
         body: JSON.stringify(formData),
       });
       if (res.ok) {
-        setMessage('ההרשמה בוצעה בהצלחה!'); // <<<<<<<-------- Remove this message and redirect to the homepage, displaying the user's info in the navbar.
-        setFormData({ firstName: '', lastName: '', email: '', password: '' });
-        setConfirmPassword('');
+        window.location.href = '/'; // Navigate to the home page
       } else {
         const errorData = await res.json();
         setMessage(errorData?.error || 'ההרשמה נכשלה. אנא נסה שוב.');
@@ -202,9 +201,9 @@ const signup = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
+            className="relative flex items-center justify-center w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600"
           >
-            {loading ? 'מבצע הרשמה...' : 'צור חשבון'}
+            {loading ? <LoadingSpinner /> : 'צור חשבון'}
           </button>
         </form>
         {message && <p className="mt-4 text-center text-red-500">{message}</p>}

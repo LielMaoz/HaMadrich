@@ -30,6 +30,7 @@ export async function POST(req: Request) {
   const jwt = await new SignJWT({
     sub: user.id, // The primary key is ID
     role: user.permission, // User's role (admin, regular)
+    username: `${user.first_name} ${user.last_name}`, // Combine first and last name
   })
     .setProtectedHeader({ alg: 'HS256' }) // Set the algorithm
     .setIssuedAt() // Automatically sets the timestamp of the JWT creation

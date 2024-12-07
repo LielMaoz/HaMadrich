@@ -45,29 +45,13 @@ const validateEmail = (email: string) => {
   return emailPattern.test(email);
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const Login = () => {
   const [valid, setValid] = useState<boolean>(true);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -83,20 +67,16 @@ const Login = () => {
     }, 100); // Small delay to allow autofill to populate
   }, []);
 
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    console.log("email "+email+" pass "+password);
-    if (
-      !email ||
-      !password
-    ) {
+    console.log('email ' + email + ' pass ' + password);
+    if (!email || !password) {
       setMessage('חובה למלא את כל השדות');
       setLoading(false);
       return;
     }
-    if(email==="NotValid"){
+    if (email === 'NotValid') {
       setMessage('בדוק את הפרטי המייל שהזנת');
       setLoading(false);
       return;
@@ -112,11 +92,10 @@ const Login = () => {
       if (response.ok) {
         const { token } = await response.json();
         localStorage.setItem('jwtToken', token); // Store JWT token
-        setMessage('Login successful');
         window.location.href = '/'; // Navigate to the home page
       } else {
         const { error } = await response.json();
-        setMessage("אחד מהפרטים שהזנת איננו נכון אנא נסו שנית.");
+        setMessage('אחד מהפרטים שהזנת איננו נכון אנא נסו שנית.');
       }
     } catch (error) {
       setMessage('משהו השתבש. אנא נסה שוב.');
@@ -136,18 +115,25 @@ const Login = () => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
               placeholder="דואר אלקטרוני"
               onChange={(e) => setValid(validateEmail(e.target.value))}
-              onBlur={(e) => valid ? setEmail(e.target.value) : setEmail("NotValid")} />
-            {!valid && <p className="text-sm text-red-500 mt-1">
-              בבקשה הזן כתובת דואר אלקטרוני תקנית
-            </p>}
+              onBlur={(e) =>
+                valid ? setEmail(e.target.value) : setEmail('NotValid')
+              }
+            />
+            {!valid && (
+              <p className="text-sm text-red-500 mt-1">
+                בבקשה הזן כתובת דואר אלקטרוני תקנית
+              </p>
+            )}
           </div>
           <div className="relative flex items-center mb-4">
             <input
               ref={passwordRef}
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
               placeholder="סיסמה"
-              onChange={(e) => { setPassword(e.target.value) }}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
             <img
               src={showPassword ? '/eye-open.png' : '/eye-closed.png'}
@@ -161,15 +147,16 @@ const Login = () => {
               type="submit"
               className="relative flex items-center justify-center w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 disabled:opacity-75"
             >
-              {loading ? <LoadingSpinner /> : "היכנס"}
+              {loading ? <LoadingSpinner /> : 'היכנס'}
             </button>
           </div>
-          <div className='mb-4 text-sm text-red-500 mt-1'>
-            {message}
-          </div>
+          <div className="mb-4 text-sm text-red-500 mt-1">{message}</div>
         </form>
         <p className="mt-4 text-center text-gray-600">
-          אין לך חשבון? <a href="/signup" className="text-blue-500">הירשם</a>
+          אין לך חשבון?{' '}
+          <a href="/signup" className="text-blue-500">
+            הירשם
+          </a>
         </p>
       </div>
     </div>
@@ -177,5 +164,3 @@ const Login = () => {
 };
 
 export default Login;
-
-

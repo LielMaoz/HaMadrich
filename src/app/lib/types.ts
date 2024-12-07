@@ -13,3 +13,10 @@ export interface UserAuthData {
   email: string;
   password: string;
 }
+
+// Define the structure of the decoded JWT
+export interface DecodedJWT {
+  sub: string;
+  role: string;
+  username: string;
+}
