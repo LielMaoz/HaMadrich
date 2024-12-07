@@ -1,23 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { hashPassword } from '@/app/lib/auth';
 import pool from '@/app/lib/db';
+import { UserAuthData } from '@/app/lib/types';
 
-interface User {
-  email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
-  permission: 'admin' | 'regular'; // Default value is "regular"
-}
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, first_name, last_name } = await req.json();
+    const { email, password, firstName, lastName } = await req.json();
 
     // Validate input
-    if (!email || !password || !first_name || !last_name) {
+    if (!email || !password || !firstName || !lastName) {
       return NextResponse.json(
-        { error: 'All fields are required' },
+        { error: 'חובה למלא את כל השדות' },
+        { status: 400 }
+      );
+    }
+
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: 'פורמט דואר אלקטרוני לא תקין' },
         { status: 400 }
       );
     }
@@ -30,7 +32,10 @@ export async function POST(req: NextRequest) {
 
     if ((existingUser.rowCount as number) > 0) {
       return NextResponse.json(
-        { error: 'Email already exists. Please use a different one.' },
+        {
+          error:
+            'הדואר האלקטרוני שהזנת כבר קיים במערכת. אנא השתמש בדואר אלקטרוני אחר.',
+        },
         { status: 409 }
       );
     }
@@ -44,11 +49,11 @@ export async function POST(req: NextRequest) {
       VALUES ($1, $2, $3, $4)
       RETURNING email, first_name, last_name;
     `;
-    const user = await pool.query<User>(query, [
+    const user = await pool.query<UserAuthData>(query, [
       email,
       passwordHash,
-      first_name,
-      last_name,
+      firstName,
+      lastName,
     ]);
 
     // Respond with the created user
@@ -56,7 +61,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'שגיאה בשרת. אנא נסה שוב מאוחר יותר.' },
       { status: 500 }
     );
   }
