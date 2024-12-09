@@ -99,7 +99,8 @@ const UserMenuDropDown = ({
   username: string;
 }) => {
   return (
-    <div className="absolute left-1/2 transform -translate-x-1/2 mt-6 bg-gray-800 text-white rounded-lg shadow-lg w-48 z-50">
+    <div className="absolute left-1/2 transform -translate-x-1/2 translate-y-16 bg-gray-800 text-white rounded-lg shadow-lg w-48 z-50 p-2 overflow-visible pointer-events-auto"
+    >
       <ul>
         {/*<li>
                         <Link href="/settings">
@@ -127,27 +128,36 @@ const UserMenuDropDown = ({
 const UserMenu = ({
   userName,
   isMenuOpen,
-  toggleMenu,
+  setIsMenuOpen,
   handleLogout,
-}: {
+}: {  
   userName: string;
   isMenuOpen: boolean;
-  toggleMenu: () => void;
+  setIsMenuOpen: (state: boolean) => void;
   handleLogout: () => void;
 }) => {
   return (
     <NavigationMenuItem>
-      <div className="relative">
+      <div
+      className="relative flex items-center justify-center group w-16 h-16 mx-auto"
+      onMouseEnter={() => setIsMenuOpen(true)}
+      onMouseLeave={() => setIsMenuOpen(false)}
+      >
         <button
           className="flex items-center justify-center w-10 h-10 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition-colors"
-          onClick={toggleMenu}
+    
         >
           {/* User icon */}
           <i className="fa-solid fa-user text-lg"></i>
         </button>
+        <div className="w-full h-full absolute top-0 left-0"
+         onMouseEnter={() => setIsMenuOpen(true)}
+         onMouseLeave={() => setIsMenuOpen(false)}
+        >
         {isMenuOpen ? (
           <UserMenuDropDown handleLogout={handleLogout} username={userName} />
         ) : null}
+        </div>
       </div>
     </NavigationMenuItem>
   );
@@ -178,13 +188,8 @@ const NavBar = () => {
     setIsLoggedIn(false);
   };
 
-  // Toggle the user menu dropdown
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   return (
-    <nav className="bg-gray-900 text-white w-full p-4" dir="rtl">
+    <nav className="bg-gray-900 text-white w-full p-4 flex items-center" dir="rtl">
       <NavigationMenu>
         <NavigationMenuList
           className="flex justify-between items-center w-full"
@@ -204,7 +209,7 @@ const NavBar = () => {
               <UserMenu
                 userName={userName}
                 isMenuOpen={isMenuOpen}
-                toggleMenu={toggleMenu}
+                setIsMenuOpen={setIsMenuOpen}
                 handleLogout={handleLogout}
               />
             )}
