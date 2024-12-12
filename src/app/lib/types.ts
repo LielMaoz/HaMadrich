@@ -7,13 +7,6 @@ export interface User {
   permission: 'admin' | 'regular'; // Default value is "regular"
 }
 
-export interface UserAuthData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
 // Define the structure of the decoded JWT
 export interface DecodedJWT {
   sub: string;

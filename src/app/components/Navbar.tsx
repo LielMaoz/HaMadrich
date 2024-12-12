@@ -189,7 +189,8 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-gray-900 text-white w-full p-4 flex items-center" dir="rtl">
+    <nav className="bg-gray-900 text-white w-full p-4 flex items-center" dir="rtl"
+    style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
       <NavigationMenu>
         <NavigationMenuList
           className="flex justify-between items-center w-full"

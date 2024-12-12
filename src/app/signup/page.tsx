@@ -99,7 +99,10 @@ const signup = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+
       if (res.ok) {
+        const { token } = await res.json();
+        localStorage.setItem('jwtToken', token);
         window.location.href = '/'; // Navigate to the home page
       } else {
         const errorData = await res.json();
