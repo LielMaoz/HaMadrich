@@ -67,6 +67,8 @@ body {
     @apply border-border;
   }
   body {
+  direction: rtl;
+  text-align: right;
     @apply bg-background text-foreground;
   }
 }
