@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { decodeJWT } from '@/utils/jwtDecoder';
+import { googleLogout } from '@react-oauth/google';
 
 import {
   NavigationMenu,
@@ -165,8 +166,14 @@ const NavBar = () => {
     if (tokenExists) {
       // Decode the JWT and parse the username from it
       const decoded = decodeJWT();
+      console.log(decoded)
       if (decoded) {
-        const username = decoded.username;
+        let username = ''
+        if (decoded.name) {
+          username = decoded.name;
+        } else {
+          username = decoded.username;
+        }    
         setUserName(username);
       }
     }
@@ -176,6 +183,8 @@ const NavBar = () => {
     localStorage.removeItem('jwtToken');
     setUserName('');
     setIsLoggedIn(false);
+    // google log out
+    googleLogout();
   };
 
   // Toggle the user menu dropdown

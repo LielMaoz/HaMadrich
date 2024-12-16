@@ -19,4 +19,5 @@ export interface DecodedJWT {
   sub: string;
   role: string;
   username: string;
+  name?: string; // for google api
 }
