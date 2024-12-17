@@ -1,23 +1,15 @@
 export interface User {
-  id: number;
+  id?: number;
   email: string;
-  password: string;
   firstName: string;
   lastName: string;
-  permission: 'admin' | 'regular'; // Default value is "regular"
-}
-
-export interface UserAuthData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
+  password?: string;
+  permission?: 'admin' | 'regular'; // Default value is "regular"
 }
 
 // Define the structure of the decoded JWT
 export interface DecodedJWT {
   sub: string;
   role: string;
-  username: string;
-  name?: string; // for google api
+  name: string;
 }

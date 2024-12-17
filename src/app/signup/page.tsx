@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { UserAuthData } from '../lib/types';
+import { User } from '../lib/types';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { GoogleLogin } from '@react-oauth/google';
 
@@ -15,7 +15,7 @@ const Signup = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
-  const [formData, setFormData] = useState<UserAuthData>({
+  const [formData, setFormData] = useState<User>({
     firstName: '',
     lastName: '',
     email: '',
@@ -100,7 +100,10 @@ const Signup = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
+
       if (res.ok) {
+        const { token } = await res.json();
+        localStorage.setItem('jwtToken', token);
         window.location.href = '/'; // Navigate to the home page
       } else {
         const errorData = await res.json();

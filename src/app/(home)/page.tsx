@@ -1,45 +1,7 @@
 import CategoryCard from '../components/CategoryCard';
+import { categories } from '@/data/home-categories';
 
 export default function Home() {
-  const categories = [
-    {
-      title: 'תרגילים יבשים',
-      image: '/images/homepage/dry-drill-exercises.png',
-      link: '/dry-drill-exercises',
-      description: 'שלוט בטכניקות בסיסיות עם אימונים טקטיים באש יבשה',
-    },
-    {
-      title: 'אימון אקדח',
-      image: '/images/homepage/handgun-training.png',
-      link: '/handgun-training',
-      description: 'השג שליטה מדויקת באקדח באמצעות הדרכת מומחים',
-    },
-    {
-      title: 'אימון נשק ארוך',
-      image: '/images/homepage/rifle-training.png',
-      link: '/rifle-training',
-      description: 'התמקצע בפעולות רובה מתקדמות ודיוק לטווח ארוך',
-    },
-    {
-      title: 'תוכן מקצועי',
-      image: '/images/homepage/professional-content.png',
-      link: '/professional-content',
-      description: 'גישה למומחיות טקטית עילית ואסטרטגיות מתקדמות',
-    },
-    {
-      title: 'עזרה ראשונה',
-      image: '/images/homepage/first-aid.png',
-      link: '/first-aid',
-      description: 'פיתוח מוכנות רפואית קרבית למצבים קריטיים',
-    },
-    {
-      title: 'מטרות',
-      image: '/images/homepage/targets.png',
-      link: '/targets',
-      description: 'שפר את הדיוק עם מערכות יעד מדויקות וניתוח',
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-zinc-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
