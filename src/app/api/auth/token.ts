@@ -1,17 +1,16 @@
+import { User } from '@/app/lib/types';
 import { SignJWT } from 'jose';
 
 // Create JWT token with user id and role
-  export async function createJwtToken(
-    userData: { id: number, permission: string, first_name: string, last_name: string }
-  ){
+  export async function createJwtToken(user: User){
   const secret = new TextEncoder().encode(
     process.env.JWT_SECRET || 'default_secret'
   ); // Make sure to set JWT_SECRET in .env file
 
   const jwt = await new SignJWT({
-    sub: userData.id.toString(), // The primary key is ID
-    role: userData.permission, // User's role (admin, regular)
-    username: `${userData.first_name} ${userData.last_name}`, // Combine first and last name
+    sub: user.id.toString(), // The primary key is ID
+    role: user.permission, // User's role (admin, regular)
+    username: `${user.firstName} ${user.lastName}`, // Combine first and last name
   })
     .setProtectedHeader({ alg: 'HS256' }) // Set the algorithm
     .setIssuedAt() // Automatically sets the timestamp of the JWT creation

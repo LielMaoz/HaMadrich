@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { hashPassword } from '@/app/lib/auth';
 import pool from '@/app/lib/db';
-import { createJwtToken } from '../utils';
+import { createJwtToken } from '../token';
+import { User } from '@/app/lib/types';
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -57,12 +58,12 @@ export async function POST(req: NextRequest) {
       lastName,
     ]);
 
-    const userData = {
+    const userData: User = {
       id: user.rows[0].id,
       email: user.rows[0].email,
       permission: user.rows[0].permission,
-      first_name: user.rows[0].first_name,
-      last_name: user.rows[0].last_name,
+      firstName: user.rows[0].first_name,
+      lastName: user.rows[0].last_name,
     };
     
     const jwt = await createJwtToken( userData );

@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import { compare } from 'bcrypt';
 //import { SignJWT } from 'jose';
 import pool from '@/app/lib/db';
-import { createJwtToken } from '../utils';
+import { createJwtToken } from '../token';
+import { User } from '@/app/lib/types';
 
 // This endpoint authenticates the user and generates a JWT token
 export async function POST(req: Request) {
@@ -24,12 +25,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
   }
 
-  const userData = {
+  const userData: User = {
     id: user.id,
     email: user.email,
     permission: user.permission,
-    first_name: user.first_name,
-    last_name: user.last_name,
+    firstName: user.first_name,
+    lastName: user.last_name,
   };
   
   const jwt = await createJwtToken( userData );
