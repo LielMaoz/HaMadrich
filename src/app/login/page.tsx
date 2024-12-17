@@ -1,8 +1,8 @@
 'use client';
 import React, { FormEvent, useEffect, useRef, useState } from 'react';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Html } from 'next/document';
-import { HtmlContext } from 'next/dist/shared/lib/html-context.shared-runtime';
+//import { Html } from 'next/document';
+//import { HtmlContext } from 'next/dist/shared/lib/html-context.shared-runtime';
 import { GoogleLogin } from '@react-oauth/google';
 
 /*const handleLogin = async (email: string, password: string) => {
@@ -95,10 +95,10 @@ const Login = () => {
         localStorage.setItem('jwtToken', token); // Store JWT token
         window.location.href = '/'; // Navigate to the home page
       } else {
-        const { error } = await response.json();
+        //const { error } = await response.json();
         setMessage('אחד מהפרטים שהזנת איננו נכון אנא נסו שנית.');
       }
-    } catch (error) {
+    } catch {
       setMessage('משהו השתבש. אנא נסה שוב.');
     } finally {
       setLoading(false);
@@ -109,10 +109,13 @@ const Login = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">התחברות</h2>
 
-        <div className='w-full px-4 py-2 flex justify-center'>
+        <div className="w-full px-4 py-2 flex justify-center">
           <GoogleLogin
-            onSuccess={credentialResponse => {
-              localStorage.setItem('jwtToken', credentialResponse.credential as string); // Store JWT token
+            onSuccess={(credentialResponse) => {
+              localStorage.setItem(
+                'jwtToken',
+                credentialResponse.credential as string
+              ); // Store JWT token
               window.location.href = '/'; // Navigate to the home page
             }}
             onError={() => {
@@ -120,7 +123,7 @@ const Login = () => {
             }}
           />
         </div>
-        
+
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
             <input
@@ -150,7 +153,9 @@ const Login = () => {
               }}
             />
             <img
-              src={showPassword ? '/eye-open.png' : '/eye-closed.png'}
+              src={
+                showPassword ? '/icons/eye-open.png' : '/icons/eye-closed.png'
+              }
               alt="Toggle Password Visibility"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer w-5 h-5"

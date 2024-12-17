@@ -5,7 +5,7 @@ import { UserAuthData } from '../lib/types';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { GoogleLogin } from '@react-oauth/google';
 
-const signup = () => {
+const Signup = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [passwordStrength, setPasswordStrength] = useState<boolean>(true);
@@ -106,7 +106,7 @@ const signup = () => {
         const errorData = await res.json();
         setMessage(errorData?.error || 'ההרשמה נכשלה. אנא נסה שוב.');
       }
-    } catch (error) {
+    } catch {
       setMessage('משהו השתבש. אנא נסה שוב.');
     } finally {
       setLoading(false);
@@ -117,10 +117,13 @@ const signup = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">הרשמה</h2>
 
-        <div className='w-full px-4 py-2 flex justify-center'>
+        <div className="w-full px-4 py-2 flex justify-center">
           <GoogleLogin
-            onSuccess={credentialResponse => {
-              localStorage.setItem('jwtToken', credentialResponse.credential as string); // Store JWT token
+            onSuccess={(credentialResponse) => {
+              localStorage.setItem(
+                'jwtToken',
+                credentialResponse.credential as string
+              ); // Store JWT token
               window.location.href = '/'; // Navigate to the home page
             }}
             onError={() => {
@@ -176,7 +179,11 @@ const signup = () => {
                 placeholder="סיסמה"
               />
               <img
-                src={isPasswordVisible ? '/eye-open.png' : '/eye-closed.png'}
+                src={
+                  isPasswordVisible
+                    ? '/icons/eye-open.png'
+                    : '/icons/eye-closed.png'
+                }
                 alt="Toggle Password Visibility"
                 onClick={handlePasswordToggle}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer w-5 h-5"
@@ -201,7 +208,9 @@ const signup = () => {
               />
               <img
                 src={
-                  isConfirmPasswordVisible ? '/eye-open.png' : '/eye-closed.png'
+                  isConfirmPasswordVisible
+                    ? '/icons/eye-open.png'
+                    : '/icons/eye-closed.png'
                 }
                 alt="Toggle Confirm Password Visibility"
                 onClick={handleConfirmPasswordToggle}
@@ -231,4 +240,4 @@ const signup = () => {
     </div>
   );
 };
-export default signup;
+export default Signup;
