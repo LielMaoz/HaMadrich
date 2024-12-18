@@ -13,3 +13,18 @@ export interface DecodedJWT {
   role: string;
   name: string;
 }
+
+//Define the structure of the drill(AKA trainings table)
+export interface drill{
+  id:number;
+  name:string;
+  drillType:string;
+  weaponType:string;
+  time:string; //string for now to check
+  target:string;
+  ammo:number;
+  distance:number;
+  description:string;
+  priviewImg:string;
+  rangeImg:string;
+}
