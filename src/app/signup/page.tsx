@@ -3,7 +3,7 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { User } from '../lib/types';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleButton } from '../components/GoogleButton';
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
@@ -120,20 +120,9 @@ const Signup = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">הרשמה</h2>
 
-        <div className="w-full px-4 py-2 flex justify-center">
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              localStorage.setItem(
-                'jwtToken',
-                credentialResponse.credential as string
-              ); // Store JWT token
-              window.location.href = '/'; // Navigate to the home page
-            }}
-            onError={() => {
-              setMessage('משהו השתבש. אנא נסה שוב.');
-            }}
-          />
-        </div>
+        <GoogleButton 
+          onFail={()=> setMessage('ההתחברות עם גוגל לא הצליחה')}
+        />
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
