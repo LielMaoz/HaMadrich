@@ -1,28 +1,40 @@
-import React from 'react';
+import { DrillListCard } from '@/app/components/DrillListCard';
+import type { drill as Drill } from '@/app/lib/types'
 
-const RifleTrainingPage: React.FC = () => {
+const RifleTrainingPage = async () => {
+   // fetching data for the drills
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  let drillList;
+
+  try {
+    const response = await fetch(`${baseUrl}/api/drills`);
+
+    if (!response.ok){
+      throw new Error(`Error: ${response.status}`);
+    }
+    
+    const { data }: { data: Drill[] } = await response.json();
+    // we need only the assault-rifle drills for this page
+    drillList = data.filter((item)=> item.weapon_type === 'assault-rifle');
+
+  } catch (error) {
+    console.error('Fetch error:', error)
+
     return (
-        <div>
-            <h1>Rifle Training</h1>
-            <p>Welcome to the rifle training page. Here you will find all the necessary information and resources to improve your rifle skills.</p>
-            <section>
-                <h2>Training Modules</h2>
-                <ul>
-                    <li>Module 1: Safety and Handling</li>
-                    <li>Module 2: Basic Marksmanship</li>
-                    <li>Module 3: Advanced Techniques</li>
-                </ul>
-            </section>
-            <section>
-                <h2>Resources</h2>
-                <ul>
-                    <li><a href="#safety-guide">Safety Guide</a></li>
-                    <li><a href="#marksmanship-tips">Marksmanship Tips</a></li>
-                    <li><a href="#advanced-techniques">Advanced Techniques</a></li>
-                </ul>
-            </section>
-        </div>
-    );
+      <h1>Fetch error: {error as string}</h1>
+    )
+  }
+
+  // adding the list of drills to the page
+  return (
+    <div className='min-h-screen my-4 flex flex-col gap-4'>
+      {drillList.map((drill) => (
+        <div key={drill.id} className='flex justify-center'>
+          <DrillListCard name={drill.training_name} image={'/images/homepage/first-aid.png'} link={''}/>
+        </div>  
+      ))}
+    </div>
+  );
 };
 
 export default RifleTrainingPage;
