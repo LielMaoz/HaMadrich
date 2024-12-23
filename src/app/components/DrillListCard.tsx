@@ -1,43 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { MouseEventHandler } from "react";
 
-type CardProps = {
-  name: string;
-  link: string;
-  imageSrc: string;
-  imageAlt: string;
-  del: MouseEventHandler<HTMLButtonElement> | undefined;
-  move: MouseEventHandler<HTMLButtonElement> | undefined;
-  editMode?: boolean;
-}
-
-function DrillListCard({ name, link, imageSrc, imageAlt, del, move, editMode = false}: CardProps) {
+export const DrillListCard = () => {
   return (
-    <div className="flex flex-row">
+    <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="relative w-full h-80">
 
-      {editMode && // Delete button
-        <Button className="h-auto relative" onClick={del} variant="destructive">
-          <Image src={"/delete.svg"} alt={"delete"} fill className="object-contain"/>
-        </Button>
-      }
-
-      <Link href={link}>
-        <div className="block border-solid border-2 border-green-950 rounded-lg text-center no-underline truncate transition-shadow duration-300 hover:shadow-2xl">
-          <h2 className="m-0 py-3 text-2xl text-white bg-green-950">{name}</h2>
-          <Image src={imageSrc} alt={imageAlt} width={300} height={200} className="object-cover"></Image>
+        <div className="w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
+          <Image
+            src='/images/homepage/first-aid.png'
+            alt='pic'
+            fill
+            className="object-cover"
+          />
         </div>
-      </Link>
 
-      {editMode && // change place button
-        <Button onClick={move} className="h-auto relative">
-          <Image src={"/move.svg"} alt={"delete"} fill className="object-contain"/>
-        </Button>
-      }
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <h2 className="text-3xl font-semibold text-zinc-900 bg-white bg-opacity-80 p-2 rounded-md">
+            Targets
+          </h2>
+        </div>
 
+      </div>
     </div>
-  );    
-}
-
-export default DrillListCard
+  );
+};
