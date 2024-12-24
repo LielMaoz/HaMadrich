@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { EditMenu } from "./EditMenu";
 
 type listPromps = {
   name: string
@@ -11,6 +11,7 @@ type listPromps = {
 export const DrillListCard = ({name, image, link}: listPromps) => {
   return (
     <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
+      <EditMenu className="absolute z-10 w-16 h-16" />
       <Link href={link}>
         <div className="relative w-full h-80">
 
