@@ -109,9 +109,7 @@ const Login = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">התחברות</h2>
 
-        <GoogleButton 
-          onFail={()=> setMessage('ההתחברות עם גוגל לא הצליחה')}
-        />
+        <GoogleButton onFail={() => setMessage('ההתחברות עם גוגל לא הצליחה')} />
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
@@ -160,6 +158,11 @@ const Login = () => {
           </div>
           <div className="mb-4 text-sm text-red-500 mt-1">{message}</div>
         </form>
+        <p className="mt-4 text-center text-gray-600">
+          <a href="/reset-password" className="text-blue-500">
+            שכחתי סיסמה
+          </a>
+        </p>
         <p className="mt-4 text-center text-gray-600">
           אין לך חשבון?{' '}
           <a href="/signup" className="text-blue-500">
