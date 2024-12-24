@@ -3,12 +3,13 @@ import type { drill as Drill } from '@/app/lib/types'
 
 const RifleTrainingPage = async () => {
    // fetching data for the drills
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const baseUrl = 'http://localhost:3000';
   let drillList;
 
   try {
     const response = await fetch(`${baseUrl}/api/drills`);
 
+    console.log('Data fetched from API with NO cache');
     if (!response.ok){
       throw new Error(`Error: ${response.status}`);
     }

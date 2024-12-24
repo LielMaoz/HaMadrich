@@ -1,22 +1,26 @@
+"use client"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useState, useEffect } from "react"
+import { checkAdmin } from '@/utils/adminCheck'
 
 export const EditMenu = ({ className }: {className?: string}) => {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // on mount we check admin status
+  useEffect(()=> {
+    setIsAdmin(checkAdmin());
+  }, [])
+
   return (
+    <>
+    {isAdmin && 
     <div className={className}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -39,6 +43,7 @@ export const EditMenu = ({ className }: {className?: string}) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
+    </div>}
+    </>
   )
 }
