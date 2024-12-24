@@ -2,13 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-type listProps = {
+type listPromps = {
   name: string
   image: string
   link: string
 }
 
-export const DrillListCard = ({name, image, link}: listProps) => {
+export const DrillListCard = ({name, image, link}: listPromps) => {
   return (
     <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
       <Link href={link}>
