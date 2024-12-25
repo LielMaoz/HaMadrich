@@ -4,6 +4,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 //import { Html } from 'next/document';
 //import { HtmlContext } from 'next/dist/shared/lib/html-context.shared-runtime';
 import { GoogleButton } from '../components/GoogleButton';
+import Image from 'next/image';
 
 /*const handleLogin = async (email: string, password: string) => {
   const response = await fetch('/api/auth/login', {
@@ -139,10 +140,12 @@ const Login = () => {
                 setPassword(e.target.value);
               }}
             />
-            <img
+            <Image
               src={
                 showPassword ? '/icons/eye-open.png' : '/icons/eye-closed.png'
               }
+              width={500}
+              height={500}
               alt="Toggle Password Visibility"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer w-5 h-5"
