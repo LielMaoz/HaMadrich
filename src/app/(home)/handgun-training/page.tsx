@@ -1,29 +1,42 @@
-import React from 'react';
+import { DrillListCard } from '@/app/components/DrillListCard';
+import type { drill as Drill } from '@/app/lib/types'
 
-const HandgunTrainingPage: React.FC = () => {
+const HandgunTrainingPage = async () => {
+  // fetching data for the drills
+  const baseUrl = 'http://localhost:3000';
+  let drillList;
+
+  try {
+    const response = await fetch(`${baseUrl}/api/drills`, {
+      next: { revalidate: 10 }, // Cache data for 120 seconds
+    });
+    console.log('Data fetched from API with cache');
+    if (!response.ok){
+      throw new Error(`Error: ${response.status}`);
+    }
+    
+    const { data }: { data: Drill[] } = await response.json();
+    // we need only the pistol drills for this page
+    drillList = data.filter((item)=> item.weapon_type === 'pistol');
+
+  } catch (error) {
+    console.error('Fetch error:', error)
+
     return (
-        <div>
-            <h1>Handgun Training</h1>
-            <p>Welcome to the handgun training page. Here you will find all the necessary information and resources to get started with handgun training.</p>
-            <section>
-                <h2>Training Modules</h2>
-                <ul>
-                    <li>Module 1: Safety and Handling</li>
-                    <li>Module 2: Basic Shooting Techniques</li>
-                    <li>Module 3: Advanced Shooting Techniques</li>
-                    <li>Module 4: Maintenance and Care</li>
-                </ul>
-            </section>
-            <section>
-                <h2>Resources</h2>
-                <ul>
-                    <li><a href="#safety">Safety Guidelines</a></li>
-                    <li><a href="#techniques">Shooting Techniques</a></li>
-                    <li><a href="#maintenance">Maintenance Tips</a></li>
-                </ul>
-            </section>
-        </div>
-    );
+      <h1>Fetch error: {error as string}</h1>
+    )
+  }
+
+  // adding the list of drills to the page
+  return (
+    <div className='min-h-screen my-4 flex flex-col gap-4'>
+      {drillList.map((drill) => (
+        <div key={drill.id} className='flex justify-center'>
+          <DrillListCard name={drill.training_name} image={'/images/homepage/first-aid.png'} link={''}/>
+        </div>  
+      ))}
+    </div>
+  );
 };
 
 export default HandgunTrainingPage;
