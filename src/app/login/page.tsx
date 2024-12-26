@@ -4,6 +4,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 //import { Html } from 'next/document';
 //import { HtmlContext } from 'next/dist/shared/lib/html-context.shared-runtime';
 import { GoogleButton } from '../components/GoogleButton';
+import Image from 'next/image';
 
 /*const handleLogin = async (email: string, password: string) => {
   const response = await fetch('/api/auth/login', {
@@ -109,9 +110,7 @@ const Login = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">התחברות</h2>
 
-        <GoogleButton 
-          onFail={()=> setMessage('ההתחברות עם גוגל לא הצליחה')}
-        />
+        <GoogleButton onFail={() => setMessage('ההתחברות עם גוגל לא הצליחה')} />
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
@@ -141,10 +140,12 @@ const Login = () => {
                 setPassword(e.target.value);
               }}
             />
-            <img
+            <Image
               src={
                 showPassword ? '/icons/eye-open.png' : '/icons/eye-closed.png'
               }
+              width={500}
+              height={500}
               alt="Toggle Password Visibility"
               onClick={() => setShowPassword(!showPassword)}
               className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer w-5 h-5"
@@ -160,6 +161,11 @@ const Login = () => {
           </div>
           <div className="mb-4 text-sm text-red-500 mt-1">{message}</div>
         </form>
+        <p className="mt-4 text-center text-gray-600">
+          <a href="/reset-password" className="text-blue-500">
+            שכחתי סיסמה
+          </a>
+        </p>
         <p className="mt-4 text-center text-gray-600">
           אין לך חשבון?{' '}
           <a href="/signup" className="text-blue-500">
