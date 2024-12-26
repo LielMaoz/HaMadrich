@@ -120,7 +120,9 @@ const Signup = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">הרשמה</h2>
 
-        <GoogleButton onFail={() => setMessage('ההתחברות עם גוגל לא הצליחה')} />
+        <GoogleButton 
+          onFail={()=> setMessage('ההתחברות עם גוגל לא הצליחה')}
+        />
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
