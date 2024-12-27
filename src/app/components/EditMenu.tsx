@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react"
 import { checkAdmin } from '@/utils/adminCheck'
 import type { Drill } from '@/app/lib/types'
+import { DeleteDrill } from "./DeleteDrill"
 
 type EditMenuProps = {
   className?: string;
@@ -35,16 +36,16 @@ export const EditMenu = ({ className, ...drill }: EditMenuProps) => {
         </DropdownMenuTrigger>
         
         <DropdownMenuContent>
-          <DropdownMenuItem className="justify-center">
+          <DropdownMenuItem >
             <p>הוספת תרגיל חדש</p>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="justify-center">
+          <DropdownMenuItem>
             <p>עריכת תרגיל זה</p>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="justify-center">
-            <p>מחיקת תרגיל זה</p>
+          <DropdownMenuItem asChild >
+            <DeleteDrill id={drill.id} />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
