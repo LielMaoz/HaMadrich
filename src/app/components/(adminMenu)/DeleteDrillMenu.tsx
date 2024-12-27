@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/alert-dialog"
 
 
-export const DeleteDrill = ( { id }: { id: number }) => {
+export const DeleteDrillMenu = ( { id }: { id: number }) => {
   const handleClick = () => {
     console.log(id);
   }

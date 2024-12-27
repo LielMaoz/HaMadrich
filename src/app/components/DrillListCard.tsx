@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { EditMenu } from "./EditMenu";
+import { EditMenu } from "./(adminMenu)/EditMenu";
 import type { Drill } from '@/app/lib/types'
 
 
