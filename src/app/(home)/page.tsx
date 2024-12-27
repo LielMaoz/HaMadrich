@@ -8,14 +8,13 @@ export default function Home() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-zinc-900 mb-4">המדריך</h1>
           <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
-            הדרך שלך להתמקצע בירי. הכלים והמשאבים המובילים לאימונים ולמידה
-            מקצועית.
+            מדריך ירי צמוד אצלך בכיס
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-          {categories.map((category, index) => (
-            <CategoryCard key={index} category={category} />
+          {categories.map((category) => (
+            <CategoryCard key={category.title} category={category} />
           ))}
         </div>
       </div>

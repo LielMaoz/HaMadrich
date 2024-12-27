@@ -7,40 +7,40 @@ export type CategoryProps = {
 
 export const categories: CategoryProps[] = [
   {
-    title: 'תרגילים יבשים',
-    image: '/images/homepage/dry-drill-exercises.png',
-    link: '/dry-drill-exercises',
-    description: 'שלוט בטכניקות בסיסיות עם אימונים טקטיים באש יבשה',
+    title: 'אימון נשק ארוך',
+    image: '/images/homepage/rifle-training.png',
+    link: '/rifle-training',
+    description: 'התמקצע בירי לטווחים משתנים',
   },
   {
     title: 'אימון אקדח',
     image: '/images/homepage/handgun-training.png',
     link: '/handgun-training',
-    description: 'השג שליטה מדויקת באקדח באמצעות הדרכת מומחים',
+    description: 'השג שליטה מדויקת באקדח כנשק משני',
   },
   {
-    title: 'אימון נשק ארוך',
-    image: '/images/homepage/rifle-training.png',
-    link: '/rifle-training',
-    description: 'התמקצע בפעולות רובה מתקדמות ודיוק לטווח ארוך',
+    title: 'תרגילים יבשים',
+    image: '/images/homepage/dry-drill-exercises.png',
+    link: '/dry-drill-exercises',
+    description: 'בצע תרגולים יבשים ושפר את לוחמת הפרט שלך',
   },
   {
     title: 'תוכן מקצועי',
     image: '/images/homepage/professional-content.png',
     link: '/professional-content',
-    description: 'גישה למומחיות טקטית עילית ואסטרטגיות מתקדמות',
+    description: 'כל התוכן המקצועי כדי להכיר את האמלח שלך',
   },
   {
     title: 'עזרה ראשונה',
     image: '/images/homepage/first-aid.png',
     link: '/first-aid',
-    description: 'פיתוח מוכנות רפואית קרבית למצבים קריטיים',
+    description: 'תרגל רפואת חירום כדי לשמור על חבריך',
   },
   {
     title: 'מטרות',
     image: '/images/homepage/targets.png',
     link: '/targets',
-    description: 'שפר את הדיוק עם מערכות יעד מדויקות וניתוח',
+    description: 'הורד מטרות להדפסה עצמית',
   },
 ];
 
