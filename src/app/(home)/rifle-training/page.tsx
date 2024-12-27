@@ -1,5 +1,5 @@
 import { DrillListCard } from '@/app/components/DrillListCard';
-import type { drill as Drill } from '@/app/lib/types'
+import type { Drill } from '@/app/lib/types'
 
 const RifleTrainingPage = async () => {
    // fetching data for the drills
@@ -16,7 +16,7 @@ const RifleTrainingPage = async () => {
     
     const { data }: { data: Drill[] } = await response.json();
     // we need only the assault-rifle drills for this page
-    drillList = data.filter((item)=> item.weapon_type === 'assault-rifle');
+    drillList = data.filter((item)=> item.weapon_type === 'נשק ארוך');
 
   } catch (error) {
     console.error('Fetch error:', error)
@@ -31,7 +31,7 @@ const RifleTrainingPage = async () => {
     <div className='min-h-screen my-4 flex flex-col gap-4'>
       {drillList.map((drill) => (
         <div key={drill.id} className='flex justify-center'>
-          <DrillListCard name={drill.training_name} image={'/images/homepage/first-aid.png'} link={''}/>
+          <DrillListCard {...drill} />
         </div>  
       ))}
     </div>

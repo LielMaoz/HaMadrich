@@ -9,8 +9,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useState, useEffect } from "react"
 import { checkAdmin } from '@/utils/adminCheck'
+import type { Drill } from '@/app/lib/types'
 
-export const EditMenu = ({ className }: {className?: string}) => {
+type EditMenuProps = {
+  className?: string;
+} & Drill;
+
+export const EditMenu = ({ className, ...drill }: EditMenuProps) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   // on mount we check admin status

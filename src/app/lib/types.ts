@@ -15,7 +15,7 @@ export interface DecodedJWT {
 }
 
 //Define the structure of the drill(AKA trainings table)
-export interface drill{
+export interface Drill{
   id:number;
   training_name:string;
   drill_type:string;
