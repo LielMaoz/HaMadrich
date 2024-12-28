@@ -36,6 +36,8 @@ import {
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
 
+import { type Drill } from "@/app/lib/types"
+
 // cheking the form imput
 const formSchema = z.object({
   training_name: z.string().min(1, {message: "יש להזין שם"}).max(255),
@@ -57,14 +59,14 @@ const formSchema = z.object({
   description: z.string().default(""),
   range_img: z.instanceof(File, { message: "יש לעלות תמונה" }).refine(
     (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
-    { message: "File size must be 4MB or less" }
+    { message: "File size must be 5MB or less" }
   ).refine(
     (file) => ["image/jpeg", "image/png"].includes(file.type), // Only JPEG or PNG
     { message: "Only JPEG or PNG files are allowed" }
-  ),
+  ).optional(),
   preview_img: z.instanceof(File).refine(
     (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
-    { message: "File size must be 4MB or less" }
+    { message: "File size must be 5MB or less" }
   ).refine(
     (file) => ["image/jpeg", "image/png"].includes(file.type), // Only JPEG or PNG
     { message: "Only JPEG or PNG files are allowed" }
@@ -73,18 +75,19 @@ const formSchema = z.object({
 });
 
 
-export const AddDrillForm = () => {
+export const EditDrillForm = ( {...drill}: Drill) => {
   const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      training_name: "",
-      drill_type: "",
-      weapon_type: "",
-      target_type: "",
-      time_to_shoot: 0,
-      ammo: 0,
-      distance: 0,
-      description: "",
+      training_name: drill.training_name,
+      drill_type: drill.drill_type,
+      weapon_type: drill.weapon_type,
+      target_type: drill.target_type,
+      time_to_shoot: drill.time_to_shoot,
+      ammo: drill.ammo,
+      distance: drill.distance,
+      description: drill.description,
+      visible: !drill.visible
     },
   })
 
@@ -95,14 +98,14 @@ export const AddDrillForm = () => {
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="w-full hover:bg-secondary/80">הוספת תרגיל חדש</AlertDialogTrigger>
+      <AlertDialogTrigger className="w-full hover:bg-secondary/80">שינוי תרגיל</AlertDialogTrigger>
 
       <AlertDialogContent className="h-3/4">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-center">יצירת תרגיל</AlertDialogTitle>
+          <AlertDialogTitle className="text-center">שינוי תרגיל</AlertDialogTitle>
 
           <AlertDialogDescription className="text-center">
-            ענה מלא את כל הפרטים הבאים למקצה החדש
+            ענה שנה את כל הפרטים הבאים למקצה הזה
           </AlertDialogDescription>
         </AlertDialogHeader>
 

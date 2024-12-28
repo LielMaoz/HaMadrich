@@ -12,6 +12,7 @@ import { checkAdmin } from '@/utils/adminCheck'
 import type { Drill } from '@/app/lib/types'
 import { DeleteDrillMenu } from "./DeleteDrillMenu"
 import { AddDrillForm } from "./AddDrillForm"
+import { EditDrillForm } from "./EditDrillForm"
 
 type EditMenuProps = {
   className?: string;
@@ -36,13 +37,13 @@ export const EditMenu = ({ className, ...drill }: EditMenuProps) => {
           </Button>
         </DropdownMenuTrigger>
         
-        <DropdownMenuContent>
+        <DropdownMenuContent className="w-0">
           <DropdownMenuItem asChild>
             <AddDrillForm/>
           </DropdownMenuItem>
 
-          <DropdownMenuItem>
-            <p>עריכת תרגיל זה</p>
+          <DropdownMenuItem asChild>
+            <EditDrillForm {...drill} />
           </DropdownMenuItem>
 
           <DropdownMenuItem asChild >

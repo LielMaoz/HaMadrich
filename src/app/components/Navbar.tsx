@@ -195,7 +195,7 @@ const NavBar = () => {
     <nav
       className="bg-gray-900 text-white w-full p-4 flex items-center"
       dir="rtl"
-      style={{ position: 'sticky', top: 0, zIndex: 1000 }}
+      style={{ position: 'sticky', top: 0, zIndex: 20 }}
     >
       <NavigationMenu>
         <NavigationMenuList
