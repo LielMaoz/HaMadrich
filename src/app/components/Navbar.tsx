@@ -189,6 +189,7 @@ const NavBar = () => {
     setIsLoggedIn(false);
     // google log out
     googleLogout();
+    window.location.href = '/';
   };
 
   return (
