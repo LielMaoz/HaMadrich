@@ -20,11 +20,12 @@ export interface Drill {
   training_name: string;
   drill_type: string;
   weapon_type: string;
-  time_to_shoot: string; //string for now to check
-  target: string;
+  time_to_shoot: number; //string for now to check
+  target_type: string;
   ammo: number;
   distance: number;
   description: string;
   preview_img: string;
   range_img: string;
+  visible: boolean;
 }

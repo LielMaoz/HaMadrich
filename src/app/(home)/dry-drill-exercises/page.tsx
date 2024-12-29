@@ -1,22 +1,21 @@
 import { DrillListCard } from '@/app/components/DrillListCard';
 import type { Drill } from '@/app/lib/types';
 
-const HandgunTrainingPage = async () => {
+const DryDrillExercises = async () => {
   // fetching data for the drills
   const baseUrl = 'http://localhost:3000';
   let drillList;
 
   try {
-    const response = await fetch(`${baseUrl}/api/drills`, {
-      next: { revalidate: 10 }, // Cache data for 120 seconds
-    });
-    console.log('Data fetched from API with cache');
+    const response = await fetch(`${baseUrl}/api/drills`);
+
+    console.log('Data fetched from API with NO cache');
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }
 
     const { data }: { data: Drill[] } = await response.json();
-    // we need only the pistol drills for this page
+    // we need only the assault-rifle drills for this page
     drillList = data.filter((item) => item.drill_type === 'יבש');
   } catch (error) {
     console.error('Fetch error:', error);
@@ -29,15 +28,11 @@ const HandgunTrainingPage = async () => {
     <div className="min-h-screen my-4 flex flex-col gap-4">
       {drillList.map((drill) => (
         <div key={drill.id} className="flex justify-center">
-          <DrillListCard
-            name={drill.training_name}
-            image={'/images/homepage/first-aid.png'}
-            link={''}
-          />
+          <DrillListCard {...drill} />
         </div>
       ))}
     </div>
   );
 };
 
-export default HandgunTrainingPage;
+export default DryDrillExercises;

@@ -29,11 +29,7 @@ const HandgunTrainingPage = async () => {
     <div className="min-h-screen my-4 flex flex-col gap-4">
       {drillList.map((drill) => (
         <div key={drill.id} className="flex justify-center">
-          <DrillListCard
-            name={drill.training_name}
-            image={'/images/homepage/first-aid.png'}
-            link={''}
-          />
+          <DrillListCard {...drill} />
         </div>
       ))}
     </div>

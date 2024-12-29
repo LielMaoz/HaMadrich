@@ -9,8 +9,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useState, useEffect } from "react"
 import { checkAdmin } from '@/utils/adminCheck'
+import type { Drill } from '@/app/lib/types'
+import { DeleteDrillMenu } from "./DeleteDrillMenu"
+import { AddDrillForm } from "./AddDrillForm"
+import { EditDrillForm } from "./EditDrillForm"
 
-export const EditMenu = ({ className }: {className?: string}) => {
+type EditMenuProps = {
+  className?: string;
+} & Drill;
+
+export const EditMenu = ({ className, ...drill }: EditMenuProps) => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   // on mount we check admin status
@@ -29,17 +37,17 @@ export const EditMenu = ({ className }: {className?: string}) => {
           </Button>
         </DropdownMenuTrigger>
         
-        <DropdownMenuContent>
-          <DropdownMenuItem className="justify-center">
-            <p>הוספת תרגיל חדש</p>
+        <DropdownMenuContent className="w-0">
+          <DropdownMenuItem asChild>
+            <AddDrillForm/>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="justify-center">
-            <p>עריכת תרגיל זה</p>
+          <DropdownMenuItem asChild>
+            <EditDrillForm {...drill} />
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="justify-center">
-            <p>מחיקת תרגיל זה</p>
+          <DropdownMenuItem asChild >
+            <DeleteDrillMenu id={drill.id} />
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
