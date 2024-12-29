@@ -1,3 +1,4 @@
+import { DrillCard } from '@/app/components/DrillCard';
 import { DrillListCard } from '@/app/components/DrillListCard';
 import type { Drill } from '@/app/lib/types';
 
@@ -29,6 +30,7 @@ const DryDrillExercises = async () => {
       {drillList.map((drill) => (
         <div key={drill.id} className="flex justify-center">
           <DrillListCard {...drill} />
+          <DrillCard/>
         </div>
       ))}
     </div>
