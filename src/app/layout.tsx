@@ -4,6 +4,7 @@ import './globals.css';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: 'Create Next App',
