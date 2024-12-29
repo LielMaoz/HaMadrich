@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-//import { decodeJWT } from '@/utils/jwtDecoder';
+import { decodeJWT } from '@/utils/jwtDecoder';
 import { googleLogout } from '@react-oauth/google';
 
 import {
@@ -15,14 +15,11 @@ import {
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Search } from 'lucide-react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { UserProvider, useUserContext } from '../lib/UserContext';
 
-/*
 // Function to check if a JWT token exists in localStorage
 const checkToken = (): boolean => {
   return !!localStorage.getItem('jwtToken');
 };
-*/
 
 // Reusable component for navigation links
 const NavigationLink = ({
@@ -165,12 +162,10 @@ const UserMenu = ({
 };
 
 const NavBar = () => {
-  const { isLoggedIn, setIsLoggedIn, userName, setUserName } = useUserContext();
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
-  //const [userName, setUserName] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  /*
   // Check for a token and update login state
   useEffect(() => {
     const tokenExists = checkToken();
@@ -187,13 +182,14 @@ const NavBar = () => {
       }
     }
   }, []);
-*/
+
   const handleLogout = () => {
     localStorage.removeItem('jwtToken');
     setUserName('');
     setIsLoggedIn(false);
     // google log out
     googleLogout();
+    window.location.href = '/';
   };
 
   return (

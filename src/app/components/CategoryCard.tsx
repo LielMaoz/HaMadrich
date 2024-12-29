@@ -3,19 +3,18 @@
   import Image from 'next/image';
   import Link from 'next/link';
   import { CategoryProps } from '@/data/home-categories';
-  import { useUserContext } from '../lib/UserContext';
   import LockIcon from './LockIcon';
 
   interface CategoryCardProps {
     category: CategoryProps;
+    isLoggedIn: boolean;
   }
 
-  export default function CategoryCard({ category }: CategoryCardProps) {
-    const { isLoggedIn } = useUserContext();
-
+  export default function CategoryCard({ category, isLoggedIn }: CategoryCardProps) {
     return (
-      <Link href={isLoggedIn? category.link : 'javascript:void(0)'} // If not logged in, prevent link navigation
-            className="group block no-underline">
+      <Link
+      href={isLoggedIn? category.link : 'javascript:void(0)'} // If not logged in, prevent link navigation
+      className="group block no-underline">
         <div
           className="
           overflow-hidden 
