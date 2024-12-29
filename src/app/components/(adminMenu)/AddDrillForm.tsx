@@ -218,6 +218,8 @@ export const AddDrillForm = () => {
                       <FormControl>
                         <Input 
                         placeholder="0"
+                        min="0"
+                        step="1"
                         type="number"
                         {...field} />
                       </FormControl>
@@ -237,7 +239,9 @@ export const AddDrillForm = () => {
                       <FormLabel>תחמושת</FormLabel>
                       <FormControl>
                         <Input 
-                        placeholder="0"     
+                        placeholder="0"
+                        min="0"
+                        step="1" 
                         type="number"
                         {...field} />
                       </FormControl>
@@ -258,6 +262,8 @@ export const AddDrillForm = () => {
                       <FormControl>
                         <Input 
                         placeholder="0"
+                        min="0"
+                        step="1"
                         type="number"
                         {...field} />
                       </FormControl>

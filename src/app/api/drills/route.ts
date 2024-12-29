@@ -1,11 +1,11 @@
 import pool from "@/app/lib/db";
 import { NextResponse } from "next/server";
-import { drill } from "@/app/lib/types";
+import { Drill } from "@/app/lib/types";
 
 
 export async function GET(){
     try{
-        const data = await pool.query<drill>('SELECT * FROM trainings');
+        const data = await pool.query<Drill>('SELECT * FROM trainings');
         return NextResponse.json({data:data.rows},{status:200});
     }
     catch(error){

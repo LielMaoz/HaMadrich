@@ -59,14 +59,14 @@ const formSchema = z.object({
   description: z.string().default(""),
   range_img: z.instanceof(File, { message: "יש לעלות תמונה" }).refine(
     (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
-    { message: "File size must be 5MB or less" }
+    { message: "File size must be 4MB or less" }
   ).refine(
     (file) => ["image/jpeg", "image/png"].includes(file.type), // Only JPEG or PNG
     { message: "Only JPEG or PNG files are allowed" }
   ).optional(),
   preview_img: z.instanceof(File).refine(
     (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
-    { message: "File size must be 5MB or less" }
+    { message: "File size must be 4MB or less" }
   ).refine(
     (file) => ["image/jpeg", "image/png"].includes(file.type), // Only JPEG or PNG
     { message: "Only JPEG or PNG files are allowed" }
@@ -221,6 +221,8 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                       <FormControl>
                         <Input 
                         placeholder="0"
+                        min="0"
+                        step="1"
                         type="number"
                         {...field} />
                       </FormControl>
@@ -240,7 +242,9 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                       <FormLabel>תחמושת</FormLabel>
                       <FormControl>
                         <Input 
-                        placeholder="0"     
+                        placeholder="0"
+                        min="0"
+                        step="1"
                         type="number"
                         {...field} />
                       </FormControl>
@@ -261,6 +265,8 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                       <FormControl>
                         <Input 
                         placeholder="0"
+                        min="0"
+                        step="1"
                         type="number"
                         {...field} />
                       </FormControl>
