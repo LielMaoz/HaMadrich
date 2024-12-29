@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { hashPassword } from '@/app/lib/auth';
 import pool from '@/app/lib/db';
 import { createJwtToken } from '../token';
 import { User } from '@/app/lib/types';
+import bcrypt from 'bcrypt';
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Hash the password
-    const passwordHash = await hashPassword(password);
+    const passwordHash = await bcrypt.hash(password, 10);
 
     // Insert user into database
     const query = `
@@ -65,8 +65,8 @@ export async function POST(req: NextRequest) {
       firstName: user.rows[0].first_name,
       lastName: user.rows[0].last_name,
     };
-    
-    const jwt = await createJwtToken( userData );
+
+    const jwt = await createJwtToken(userData);
 
     // Return the token in response
     return NextResponse.json({ user: userData, token: jwt }, { status: 201 });
