@@ -3,7 +3,8 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { User } from '../lib/types';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleButton } from '../components/GoogleButton';
+import Image from 'next/image';
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
@@ -119,20 +120,8 @@ const Signup = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">הרשמה</h2>
-        <div className="w-full px-4 py-2 flex justify-center">
-          <GoogleLogin
-            onSuccess={(credentialResponse) => {
-              localStorage.setItem(
-                'jwtToken',
-                credentialResponse.credential as string
-              ); // Store JWT token
-              window.location.href = '/'; // Navigate to the home page
-            }}
-            onError={() => {
-              setMessage('משהו השתבש. אנא נסה שוב.');
-            }}
-          />
-        </div>
+
+        <GoogleButton onFail={() => setMessage('ההתחברות עם גוגל לא הצליחה')} />
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
@@ -180,12 +169,14 @@ const Signup = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="סיסמה"
               />
-              <img
+              <Image
                 src={
                   isPasswordVisible
                     ? '/icons/eye-open.png'
                     : '/icons/eye-closed.png'
                 }
+                width={500}
+                height={500}
                 alt="Toggle Password Visibility"
                 onClick={handlePasswordToggle}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer w-5 h-5"
@@ -208,12 +199,14 @@ const Signup = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="אימות סיסמה"
               />
-              <img
+              <Image
                 src={
                   isConfirmPasswordVisible
                     ? '/icons/eye-open.png'
                     : '/icons/eye-closed.png'
                 }
+                width={500}
+                height={500}
                 alt="Toggle Confirm Password Visibility"
                 onClick={handleConfirmPasswordToggle}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer w-5 h-5"

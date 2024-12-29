@@ -1,43 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { MouseEventHandler } from "react";
+import { EditMenu } from "./EditMenu";
 
-type CardProps = {
-  name: string;
-  link: string;
-  imageSrc: string;
-  imageAlt: string;
-  del: MouseEventHandler<HTMLButtonElement> | undefined;
-  move: MouseEventHandler<HTMLButtonElement> | undefined;
-  editMode?: boolean;
+type listPromps = {
+  name: string
+  image: string
+  link: string
 }
 
-function DrillListCard({ name, link, imageSrc, imageAlt, del, move, editMode = false}: CardProps) {
+export const DrillListCard = ({name, image, link}: listPromps) => {
   return (
-    <div className="flex flex-row">
-
-      {editMode && // Delete button
-        <Button className="h-auto relative" onClick={del} variant="destructive">
-          <Image src={"/delete.svg"} alt={"delete"} fill className="object-contain"/>
-        </Button>
-      }
-
+    <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
+      <EditMenu className="absolute z-10 w-16 h-16" />
       <Link href={link}>
-        <div className="block border-solid border-2 border-green-950 rounded-lg text-center no-underline truncate transition-shadow duration-300 hover:shadow-2xl">
-          <h2 className="m-0 py-3 text-2xl text-white bg-green-950">{name}</h2>
-          <Image src={imageSrc} alt={imageAlt} width={300} height={200} className="object-cover"></Image>
+        <div className="relative w-full h-80">
+
+          <div className="relative w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
+            <Image
+              src={image}
+              alt={name}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover"
+            />
+          </div>
+
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <h2 className="text-3xl font-semibold text-zinc-900 bg-white bg-opacity-80 p-2 rounded-md">
+              {name}
+            </h2>
+          </div>
+
         </div>
       </Link>
-
-      {editMode && // change place button
-        <Button onClick={move} className="h-auto relative">
-          <Image src={"/move.svg"} alt={"delete"} fill className="object-contain"/>
-        </Button>
-      }
-
-    </div>
-  );    
-}
-
-export default DrillListCard
+    </div>  
+  );
+};
