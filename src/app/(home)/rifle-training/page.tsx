@@ -16,7 +16,7 @@ const RifleTrainingPage = async () => {
     
     const { data }: { data: Drill[] } = await response.json();
     // we need only the assault-rifle drills for this page
-    drillList = data.filter((item)=> item.weapon_type === 'assault-rifle');
+    drillList = data.filter((item)=> item.weapon_type === 'נשק ארוך');
 
   } catch (error) {
     console.error('Fetch error:', error)
