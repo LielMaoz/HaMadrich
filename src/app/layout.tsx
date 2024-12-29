@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from 'next';
 import './globals.css';
 import NavBar from './components/Navbar';
@@ -14,13 +15,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="he" dir="rtl">
       <body>
         <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID as string}>
-          <NavBar />
-          <main>{children}</main>
-          <Footer />
+            <NavBar />
+            <Suspense fallback={<p>טוען...</p>}>
+              <main>{children}</main>
+            </Suspense>
+            <Footer />
         </GoogleOAuthProvider>
       </body>
     </html>
