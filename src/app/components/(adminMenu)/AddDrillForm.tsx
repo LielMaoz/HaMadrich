@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import {
   AlertDialog,
   //AlertDialogAction,
@@ -9,7 +9,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from '@/components/ui/alert-dialog';
 import {
   Form,
   FormControl,
@@ -18,97 +18,150 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Switch } from "@/components/ui/switch"
-import { useForm } from "react-hook-form"
-import {
-  zodResolver
-} from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
 
 // cheking the form imput
 const formSchema = z.object({
-  training_name: z.string().min(1, {message: "יש להזין שם"}).max(255),
-  drill_type: z.string().min(1, {message: "יש לבחור באחת מן האפשרויות"}).max(50),
-  weapon_type: z.string().min(1, {message: "יש לבחור באחת מן האפשרויות"}).max(50),
-  target_type: z.string().min(1, {message: "יש לבחור באחת מן האפשרויות"}).max(50),
+  training_name: z.string().min(1, { message: 'יש להזין שם' }).max(255),
+  drill_type: z
+    .string()
+    .min(1, { message: 'יש לבחור באחת מן האפשרויות' })
+    .max(50),
+  weapon_type: z
+    .string()
+    .min(1, { message: 'יש לבחור באחת מן האפשרויות' })
+    .max(50),
+  target_type: z
+    .string()
+    .min(1, { message: 'יש לבחור באחת מן האפשרויות' })
+    .max(50),
   time_to_shoot: z.preprocess(
-    (value) => (typeof value === "string" ? parseFloat(value) : value),
+    (value) => (typeof value === 'string' ? parseFloat(value) : value),
     z.number().nonnegative().default(0)
   ),
   ammo: z.preprocess(
-    (value) => (typeof value === "string" ? parseFloat(value) : value),
+    (value) => (typeof value === 'string' ? parseFloat(value) : value),
     z.number().nonnegative().default(0)
   ),
   distance: z.preprocess(
-    (value) => (typeof value === "string" ? parseFloat(value) : value),
+    (value) => (typeof value === 'string' ? parseFloat(value) : value),
     z.number().nonnegative().default(0)
   ),
-  description: z.string().default(""),
-  range_img: z.instanceof(File, { message: "יש לעלות תמונה" }).refine(
-    (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
-    { message: "File size must be 4MB or less" }
-  ).refine(
-    (file) => ["image/jpeg", "image/png"].includes(file.type), // Only JPEG or PNG
-    { message: "Only JPEG or PNG files are allowed" }
-  ),
-  preview_img: z.instanceof(File).refine(
-    (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
-    { message: "File size must be 4MB or less" }
-  ).refine(
-    (file) => ["image/jpeg", "image/png"].includes(file.type), // Only JPEG or PNG
-    { message: "Only JPEG or PNG files are allowed" }
-  ).optional(),
-  visible: z.preprocess((value) => !value , z.boolean().default(true))
+  description: z.string().default(''),
+  range_img: z
+    .instanceof(File, { message: 'יש לעלות תמונה' })
+    .refine(
+      (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
+      { message: 'File size must be 4MB or less' }
+    )
+    .refine(
+      (file) => ['image/jpeg', 'image/png'].includes(file.type), // Only JPEG or PNG
+      { message: 'Only JPEG or PNG files are allowed' }
+    ),
+  preview_img: z
+    .instanceof(File)
+    .refine(
+      (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
+      { message: 'File size must be 4MB or less' }
+    )
+    .refine(
+      (file) => ['image/jpeg', 'image/png'].includes(file.type), // Only JPEG or PNG
+      { message: 'Only JPEG or PNG files are allowed' }
+    )
+    .optional(),
+  visible: z.preprocess((value) => !value, z.boolean().default(true)),
 });
 
-
 export const AddDrillForm = () => {
-  const form = useForm < z.infer < typeof formSchema >> ({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      training_name: "",
-      drill_type: "",
-      weapon_type: "",
-      target_type: "",
+      training_name: '',
+      drill_type: '',
+      weapon_type: '',
+      target_type: '',
       time_to_shoot: 0,
       ammo: 0,
       distance: 0,
-      description: "",
+      description: '',
     },
-  })
+  });
 
-  const onSubmit = async (values: z.infer < typeof formSchema > ) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // add fetch when backend is done
-    console.log(values);
-  }
+    // Create a FormData object to hold both JSON and file data
+    const formData = new FormData();
+
+    // Append the form values (except files) to the FormData
+    Object.keys(values).forEach((key) => {
+      // Skip the files fields because we will append them separately
+      if (key !== 'range_img' && key !== 'preview_img') {
+        formData.append(key, values[key as keyof typeof values] as string);
+      }
+    });
+
+    // Append the files
+    if (values.range_img) {
+      formData.append('range_img', values.range_img);
+    }
+    if (values.preview_img) {
+      formData.append('preview_img', values.preview_img);
+    }
+    try {
+      const token = localStorage.getItem('jwtToken'); // Retrieve token from localStorage
+      const res = await fetch('/api/drills/edit', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+      if (res.ok) {
+        console.log(values);
+        //window.location.href = '/'; // Navigate to the home page?
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger className="w-full hover:bg-secondary/80">הוספת תרגיל חדש</AlertDialogTrigger>
+      <AlertDialogTrigger className="w-full hover:bg-secondary/80">
+        הוספת תרגיל חדש
+      </AlertDialogTrigger>
 
       <AlertDialogContent className="h-3/4">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-center">יצירת תרגיל</AlertDialogTitle>
+          <AlertDialogTitle className="text-center">
+            יצירת תרגיל
+          </AlertDialogTitle>
 
           <AlertDialogDescription className="text-center">
             ענה מלא את כל הפרטים הבאים למקצה החדש
           </AlertDialogDescription>
         </AlertDialogHeader>
 
-        
         <Form {...form}>
-          <form id="myForm" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto h-[95%] overflow-y-auto py-2 px-2" >
+          <form
+            id="myForm"
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-8 max-w-3xl mx-auto h-[95%] overflow-y-auto py-2 px-2"
+          >
             <FormField
               control={form.control}
               name="training_name"
@@ -116,29 +169,27 @@ export const AddDrillForm = () => {
                 <FormItem>
                   <FormLabel className="text-base">שם המקצה</FormLabel>
                   <FormControl>
-                    <Input 
-                    type="text" 
-                    placeholder="שם המקצה"
-                    {...field} />
+                    <Input type="text" placeholder="שם המקצה" {...field} />
                   </FormControl>
-                  <FormDescription>
-                    השם שבו יופיע מקצה זה באתר
-                  </FormDescription>
+                  <FormDescription>השם שבו יופיע מקצה זה באתר</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            
+
             {/* the 3 types: drill_type, weapon_type, target_type all are select */}
-            <div className="grid grid-cols-12 gap-4"> 
-              <div className="col-span-4">         
+            <div className="grid grid-cols-12 gap-4">
+              <div className="col-span-4">
                 <FormField
                   control={form.control}
                   name="drill_type"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>סוג מקצה</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="בחר סוג מקצה" />
@@ -154,7 +205,7 @@ export const AddDrillForm = () => {
                   )}
                 />
               </div>
-                  
+
               <div className="col-span-4">
                 <FormField
                   control={form.control}
@@ -162,7 +213,10 @@ export const AddDrillForm = () => {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>סוג נשק</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="בחר סוג נשק" />
@@ -178,15 +232,18 @@ export const AddDrillForm = () => {
                   )}
                 />
               </div>
-          
-              <div className="col-span-4">  
+
+              <div className="col-span-4">
                 <FormField
                   control={form.control}
                   name="target_type"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>סוג מטרה</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="בחר סוג מטרה" />
@@ -216,10 +273,7 @@ export const AddDrillForm = () => {
                     <FormItem>
                       <FormLabel>זמן לירי</FormLabel>
                       <FormControl>
-                        <Input 
-                        placeholder="0"
-                        type="number"
-                        {...field} />
+                        <Input placeholder="0" type="number" {...field} />
                       </FormControl>
                       <FormDescription>הזמן הוא בשניות</FormDescription>
                       <FormMessage />
@@ -227,8 +281,8 @@ export const AddDrillForm = () => {
                   )}
                 />
               </div>
-          
-              <div className="col-span-4">   
+
+              <div className="col-span-4">
                 <FormField
                   control={form.control}
                   name="ammo"
@@ -236,10 +290,7 @@ export const AddDrillForm = () => {
                     <FormItem>
                       <FormLabel>תחמושת</FormLabel>
                       <FormControl>
-                        <Input 
-                        placeholder="0"     
-                        type="number"
-                        {...field} />
+                        <Input placeholder="0" type="number" {...field} />
                       </FormControl>
                       <FormDescription>התחמושת היא בכדורים</FormDescription>
                       <FormMessage />
@@ -247,7 +298,7 @@ export const AddDrillForm = () => {
                   )}
                 />
               </div>
-          
+
               <div className="col-span-4">
                 <FormField
                   control={form.control}
@@ -256,10 +307,7 @@ export const AddDrillForm = () => {
                     <FormItem>
                       <FormLabel>מרחק למטרה</FormLabel>
                       <FormControl>
-                        <Input 
-                        placeholder="0"
-                        type="number"
-                        {...field} />
+                        <Input placeholder="0" type="number" {...field} />
                       </FormControl>
                       <FormDescription>המרחק הוא במטרים</FormDescription>
                       <FormMessage />
@@ -268,7 +316,7 @@ export const AddDrillForm = () => {
                 />
               </div>
             </div>
-            
+
             {/* text field */}
             <FormField
               control={form.control}
@@ -291,7 +339,7 @@ export const AddDrillForm = () => {
 
             {/* file upload */}
             <div className="grid grid-cols-12 gap-4">
-              <div className="col-span-6">   
+              <div className="col-span-6">
                 <FormField
                   control={form.control}
                   name="range_img"
@@ -299,9 +347,12 @@ export const AddDrillForm = () => {
                     <FormItem>
                       <FormLabel>תמונת מקצה</FormLabel>
                       <FormControl>
-                        <Input 
-                        type="file"
-                        onChange={(e) => field.onChange(e.target.files?.[0] || null)} />
+                        <Input
+                          type="file"
+                          onChange={(e) =>
+                            field.onChange(e.target.files?.[0] || null)
+                          }
+                        />
                       </FormControl>
                       <FormDescription>תמונה זו תוצג לצד המקצה</FormDescription>
                       <FormMessage />
@@ -309,7 +360,7 @@ export const AddDrillForm = () => {
                   )}
                 />
               </div>
-          
+
               <div className="col-span-6">
                 <FormField
                   control={form.control}
@@ -318,18 +369,24 @@ export const AddDrillForm = () => {
                     <FormItem>
                       <FormLabel>תמונת תצוגה מקדימה של מקצה</FormLabel>
                       <FormControl>
-                        <Input 
-                        type="file"
-                        onChange={(e) => field.onChange(e.target.files?.[0] || null)} />
+                        <Input
+                          type="file"
+                          onChange={(e) =>
+                            field.onChange(e.target.files?.[0] || null)
+                          }
+                        />
                       </FormControl>
-                      <FormDescription>תמונה זו תוצג לכניסת המקצה, אם לא תעלה תמונה זו אז תוצג תמונת מקצה</FormDescription>
+                      <FormDescription>
+                        תמונה זו תוצג לכניסת המקצה, אם לא תעלה תמונה זו אז תוצג
+                        תמונת מקצה
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
               </div>
             </div>
-            
+
             {/* Switch for is visible or not */}
             <FormField
               control={form.control}
@@ -352,12 +409,14 @@ export const AddDrillForm = () => {
             />
           </form>
         </Form>
-        
+
         <AlertDialogFooter className="gap-2">
-              <AlertDialogCancel>ביטול</AlertDialogCancel>
-              <Button type="submit" form="myForm">המשך</Button>
-            </AlertDialogFooter>
+          <AlertDialogCancel>ביטול</AlertDialogCancel>
+          <Button type="submit" form="myForm">
+            המשך
+          </Button>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
-}
+  );
+};
