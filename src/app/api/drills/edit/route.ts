@@ -1,6 +1,6 @@
 import pool from '@/app/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
-import { uploadFileToDrive } from './googleDrive';
+import { deleteFileFromDrive, uploadFileToDrive } from './googleDrive';
 
 export async function POST(req: NextRequest) {
   const drillInfo = await req.formData();
@@ -58,6 +58,57 @@ export async function POST(req: NextRequest) {
     );
   } catch (error) {
     console.log(error);
+    return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
+  }
+}
+
+async function deleteImg(img: string) {
+  const rangeURL = new URL(img);
+  const rangeParams = rangeURL.searchParams;
+  const rangeId = rangeParams.get('id');
+  if (!rangeId) {
+    return NextResponse.json({ error: 'Range ID is missing' }, { status: 400 });
+  }
+  try {
+    await deleteFileFromDrive(rangeId as string);
+    return NextResponse.json(
+      { message: 'Drill deleted successfully' },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ error: 'Error deleting file:' });
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const id = await req.json();
+    const drill = await pool.query(
+      `
+        select id,range_img, preview_img
+        from trainings where id = $1;`,
+      [id]
+    );
+    const rangeImg = drill.rows[0]?.range_img;
+    if (rangeImg) {
+      await deleteImg(rangeImg);
+    }
+    const previewImg = drill.rows[0]?.preview_img;
+    if (previewImg) {
+      await deleteImg(previewImg);
+    }
+    await pool.query(
+      `
+          DELETE FROM trainings WHERE id = $1;`,
+      [id]
+    );
+
+    return NextResponse.json(
+      { message: 'Drill deleted successfully' },
+      { status: 200 }
+    );
+  } catch {
     return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
   }
 }

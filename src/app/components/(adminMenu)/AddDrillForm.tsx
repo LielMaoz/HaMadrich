@@ -102,13 +102,11 @@ export const AddDrillForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // add fetch when backend is done
     // Create a FormData object to hold both JSON and file data
     const formData = new FormData();
 
     // Append the form values (except files) to the FormData
     Object.keys(values).forEach((key) => {
-      // Skip the files fields because we will append them separately
       if (key !== 'range_img' && key !== 'preview_img') {
         formData.append(key, values[key as keyof typeof values] as string);
       }
@@ -122,7 +120,7 @@ export const AddDrillForm = () => {
       formData.append('preview_img', values.preview_img);
     }
     try {
-      const token = localStorage.getItem('jwtToken'); // Retrieve token from localStorage
+      const token = localStorage.getItem('jwtToken');
       const res = await fetch('/api/drills/edit', {
         method: 'POST',
         headers: {
@@ -132,7 +130,7 @@ export const AddDrillForm = () => {
       });
       if (res.ok) {
         console.log(values);
-        //window.location.href = '/'; // Navigate to the home page?
+        //window.location.href = '/'; // Navigate to the home page? add success message
       }
     } catch (error) {
       console.log(error);

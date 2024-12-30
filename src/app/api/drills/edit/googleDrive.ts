@@ -101,7 +101,6 @@ export async function findFileInDrive(fileName: string) {
 }
 
 export async function deleteFileFromDrive(fileId: string) {
-  console.log(fileId);
   const auth = authenticateGoogle();
   const drive = google.drive({ version: 'v3', auth: auth });
   const body_value = {
