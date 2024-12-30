@@ -14,7 +14,7 @@ export default function Loading() {
           zIndex: 1000, 
       }}>
         <img
-          src="/images/ShootingloaderAnimationWithoutBackground.gif"
+          src="/images/Shootingloader.gif"
           alt="טוען..."
           style={{
             display: "block",
