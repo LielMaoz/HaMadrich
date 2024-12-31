@@ -9,9 +9,17 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { useState } from 'react';
+import LoadingSpinner from '../LoadingSpinner';
 
 export const DeleteDrillMenu = ({ id }: { id: number }) => {
+  const [msg, setMsg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleClick = async () => {
+    setMsg("");
+    setLoading(true);
+
     try {
       const token = localStorage.getItem('jwtToken');
       const res = await fetch('/api/drills/edit', {
@@ -22,11 +30,16 @@ export const DeleteDrillMenu = ({ id }: { id: number }) => {
         body: JSON.stringify(id),
       });
       if (res.ok) {
-        console.log(id);
-        //window.location.href = '/'; // Navigate to the home page? add success message
+        setMsg("הפעולה בוצעה");
+        await new Promise((res)=> setTimeout(res, 2000));
+        window.location.reload();
+      } else {
+        setMsg("הפעולה נכשלה");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,8 +62,11 @@ export const DeleteDrillMenu = ({ id }: { id: number }) => {
         </AlertDialogHeader>
 
         <AlertDialogFooter className="gap-2">
+          <p className={`w-full flex justify-center items-center ${msg === "הפעולה בוצעה" ? "text-green-700" : "text-red-500"}`}>
+            {msg}
+          </p>
           <AlertDialogCancel>ביטול</AlertDialogCancel>
-          <AlertDialogAction onClick={handleClick}>המשך</AlertDialogAction>
+          <AlertDialogAction onClick={handleClick} disabled={loading}>{loading ? <LoadingSpinner /> : 'המשך'}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

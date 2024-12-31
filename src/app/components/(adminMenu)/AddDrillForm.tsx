@@ -109,6 +109,8 @@ export const AddDrillForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setMsg("");
+    setLoading(true);
     // Create a FormData object to hold both JSON and file data
     const formData = new FormData();
 
@@ -136,11 +138,19 @@ export const AddDrillForm = () => {
         body: formData,
       });
       if (res.ok) {
-        console.log(values);
-        //window.location.href = '/'; // Navigate to the home page? add success message
+        // telling user his action is succsesful and refreshing screen after a delay
+        setMsg("הפעולה בוצעה");
+        await new Promise((res)=> setTimeout(res, 2000));
+        window.location.reload();
+      } else {
+        // telling user what is wrong
+        const { error } = await res.json();
+        setMsg(error || "הפעולה נכשלה");
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -435,7 +445,7 @@ export const AddDrillForm = () => {
                 {msg}
               </p>
               <AlertDialogCancel>ביטול</AlertDialogCancel>
-              <Button type="submit" form="myForm">{loading ? <LoadingSpinner /> : 'המשך'}</Button>
+              <Button type="submit" form="myForm" disabled={loading}>{loading ? <LoadingSpinner /> : 'המשך'}</Button>
             </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
