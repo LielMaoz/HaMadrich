@@ -1,4 +1,3 @@
-"use client"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import {
@@ -7,8 +6,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useState, useEffect } from "react"
-import { checkAdmin } from '@/utils/adminCheck'
 import type { Drill } from '@/app/lib/types'
 import { DeleteDrillMenu } from "./DeleteDrillMenu"
 import { AddDrillForm } from "./AddDrillForm"
@@ -19,16 +16,7 @@ type EditMenuProps = {
 } & Drill;
 
 export const EditMenu = ({ className, ...drill }: EditMenuProps) => {
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  // on mount we check admin status
-  useEffect(()=> {
-    setIsAdmin(checkAdmin());
-  }, [])
-
   return (
-    <>
-    {isAdmin && 
     <div className={className}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -51,7 +39,6 @@ export const EditMenu = ({ className, ...drill }: EditMenuProps) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>}
-    </>
+    </div>
   )
 }

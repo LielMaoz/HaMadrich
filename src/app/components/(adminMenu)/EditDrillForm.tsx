@@ -35,8 +35,9 @@ import {
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { Button } from "@/components/ui/button"
-
 import { type Drill } from "@/app/lib/types"
+import { useState } from "react"
+import LoadingSpinner from "../LoadingSpinner"
 
 // cheking the form imput
 const formSchema = z.object({
@@ -76,6 +77,9 @@ const formSchema = z.object({
 
 
 export const EditDrillForm = ( {...drill}: Drill) => {
+  const [msg, setMsg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
   const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -93,7 +97,15 @@ export const EditDrillForm = ( {...drill}: Drill) => {
 
   const onSubmit = async (values: z.infer < typeof formSchema > ) => {
     // add fetch when backend is done
+    setMsg("");
+    setLoading(true);
+    // temp test code
+    await new Promise((res)=> setTimeout(res, 1500))
     console.log(values);
+    // end of temp
+    setMsg("הפעולה בוצעה");
+    setLoading(false);
+    window.location.reload();
   }
 
   return (
@@ -363,8 +375,11 @@ export const EditDrillForm = ( {...drill}: Drill) => {
         </Form>
         
         <AlertDialogFooter className="gap-2">
+              <p className={`w-full flex justify-center items-center ${msg === "הפעולה בוצעה" ? "text-green-700" : "text-red-500"}`}>
+                {msg}
+              </p>
               <AlertDialogCancel>ביטול</AlertDialogCancel>
-              <Button type="submit" form="myForm">המשך</Button>
+              <Button type="submit" form="myForm">{loading ? <LoadingSpinner /> : 'המשך'}</Button>
             </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

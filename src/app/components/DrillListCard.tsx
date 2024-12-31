@@ -1,13 +1,25 @@
+'use client'
 import Image from "next/image";
 import Link from "next/link";
 import { EditMenu } from "./(adminMenu)/EditMenu";
 import type { Drill } from '@/app/lib/types'
+import { useState, useEffect } from "react"
+import { checkAdmin } from '@/utils/adminCheck'
 
 
 export const DrillListCard = ({...drill}: Drill) => {
+  const [isAdmin, setIsAdmin] = useState(false);
+  
+  // on mount we check admin status
+  useEffect(()=> {
+    setIsAdmin(checkAdmin());
+  }, [])
+
   return (
-    <div className="w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden">
-      <EditMenu className="absolute z-10 w-16 h-16" {...drill} />
+    <div className={`w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden 
+      ${drill.visible ? "" : "filter grayscale"} 
+      ${(!isAdmin && !drill.visible) ? "hidden" : "block"}`}>
+      {isAdmin && <EditMenu className="absolute z-10 w-16 h-16" {...drill} />}
       <Link href={`/drills/${drill.id}`}>
         <div className="relative w-full h-80">
 
@@ -21,14 +33,14 @@ export const DrillListCard = ({...drill}: Drill) => {
             />
           </div>
 
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
             <h2 className="text-3xl font-semibold text-zinc-900 bg-white bg-opacity-80 p-2 rounded-md">
-              {drill.training_name}
+              {`${drill.training_name} ${drill.visible ? "" : "(מוסתר)"}`}
             </h2>
           </div>
 
         </div>
       </Link>
-    </div>  
+    </div>
   );
 };
