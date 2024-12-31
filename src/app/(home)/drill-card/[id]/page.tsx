@@ -31,9 +31,7 @@ const DrillCardPreview = () => {
           throw new Error(`Error: ${response.status}`);
         }
         const { data }: { data: Drill[] } = await response.json();
-        const specificDrill: Drill | undefined = data.find(
-          (item) => item.id === Number(id)
-        );
+        const specificDrill: Drill | undefined = data[0];
         if (specificDrill) {
           // can fetch the drill
           setDrill(specificDrill);
