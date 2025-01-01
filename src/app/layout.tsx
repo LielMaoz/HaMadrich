@@ -18,11 +18,11 @@ export default function RootLayout({
 
   return (
     <html lang="he" dir="rtl">
-      <body>
+      <body className="flex flex-col min-h-screen">
         <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID as string}>
             <NavBar />
             <Suspense fallback={<p>טוען...</p>}>
-              <main>{children}</main>
+              <main className="flex-1">{children}</main>
             </Suspense>
             <Footer />
         </GoogleOAuthProvider>

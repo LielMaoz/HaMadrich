@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Loading() {
     return (
       <div style={{ 
@@ -13,9 +15,11 @@ export default function Loading() {
           alignItems: "center", 
           zIndex: 1000, 
       }}>
-        <img
+        <Image
           src="/images/Shootingloader.gif"
           alt="טוען..."
+          width={500}
+          height={500}
           style={{
             display: "block",
             maxWidth: "40%",
