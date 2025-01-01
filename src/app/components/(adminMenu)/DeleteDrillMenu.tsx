@@ -30,6 +30,7 @@ export const DeleteDrillMenu = ({ id }: { id: number }) => {
         body: JSON.stringify(id),
       });
       if (res.ok) {
+        // telling user his action is succsesful and refreshing screen after a delay
         setMsg("הפעולה בוצעה");
         await new Promise((res)=> setTimeout(res, 2000));
         window.location.reload();

@@ -104,6 +104,9 @@ export const EditDrillForm = ( {...drill}: Drill) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setMsg("");
+    setLoading(true);
+
     const valuesWithId = {
       ...values,
       id: drill.id,
@@ -143,11 +146,19 @@ export const EditDrillForm = ( {...drill}: Drill) => {
             body: formData,
           });
           if (res.ok) {
-            console.log(valuesWithId);
-            //window.location.href = '/'; // Navigate to the home page? add success message
+            // telling user his action is succsesful and refreshing screen after a delay
+            setMsg("הפעולה בוצעה");
+            await new Promise((res)=> setTimeout(res, 2000));
+            window.location.reload();
+          } else {
+            // telling user what is wrong
+            const { error } = await res.json();
+            setMsg(error || "הפעולה נכשלה");
           }
         } catch (error) {
           console.log(error);
+        } finally {
+          setLoading(false);
         }
       }
     } else {
@@ -161,11 +172,19 @@ export const EditDrillForm = ( {...drill}: Drill) => {
           body: JSON.stringify(valuesWithId),
         });
         if (res.ok) {
-          console.log(valuesWithId);
-          //window.location.href = '/'; // Navigate to the home page? add success message
+          // telling user his action is succsesful and refreshing screen after a delay
+          setMsg("הפעולה בוצעה");
+          await new Promise((res)=> setTimeout(res, 2000));
+          window.location.reload();
+        } else {
+          // telling user what is wrong
+          const { error } = await res.json();
+          setMsg(error || "הפעולה נכשלה");
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
   };
