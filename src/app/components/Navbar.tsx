@@ -61,7 +61,12 @@ const HomePage = () => {
 
 const SignIn = () => {
   return (
-    <NavigationLink href="/login" component={NavigationMenuLink} text="כניסה" />
+    <NavigationLink
+    href="/login"
+    component={NavigationMenuLink}
+    text="כניסה"
+    additionalClasses="focus:border-b-2 focus:border-white active:ring-2 active:ring-white"
+    />
   );
 };
 
@@ -71,6 +76,7 @@ const SignUp = () => {
       href="/signup"
       component={NavigationMenuLink}
       text="הרשמה"
+      additionalClasses="focus:border-b-2 focus:border-white active:ring-2 active:ring-white"
     />
   );
 };
@@ -78,7 +84,13 @@ const SignUp = () => {
 const SearchBar = () => {
   return (
     <div className="flex items-center space-x-reverse">
-      <div className="flex items-center bg-gray-700 rounded-full px-4 py-2">
+      {/* Search button for small screens */}
+      <button className="block sm:hidden p-2 bg-gray-700 rounded-full">
+        <Search className="text-white w-5 h-5" />
+      </button>
+
+      {/* Search bar for large screens */}
+      <div className="hidden sm:flex items-center bg-gray-700 rounded-full px-4 py-2">
         <Search className="text-white w-5 h-5" />
         <input
           type="text"
@@ -203,11 +215,11 @@ const NavBar = () => {
           className="flex justify-between items-center w-full"
           dir="rtl"
         >
-          <div>
+          <div className="ml-2">
             <HomePage />
           </div>
 
-          <div className="flex space-x-4 space-x-reverse">
+          <div className="flex space-x-2 space-x-reverse">
             {!isLoggedIn ? (
               <>
                 <SignIn />
