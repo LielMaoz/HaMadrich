@@ -25,7 +25,7 @@ export const DrillListCard = ({...drill}: Drill) => {
 
           <div className="relative w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
             <Image
-              src='/images/homepage/first-aid.png' // CHANGE WHEN WE HAVE PICTURES
+              src={drill.preview_img} // CHANGE WHEN WE HAVE PICTURES
               alt={drill.training_name}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
