@@ -206,8 +206,8 @@ export async function PUT(req: NextRequest) {
             ammo = $6,
             distance = $7,
             description = $8,
-            range_img = $9,
-            preview_img = $10,
+            range_img = COALESCE($9, $13),
+            preview_img = COALESCE($10, $14),
             visible = $11
         where id=$12
         returning id, training_name, drill_type, weapon_type, time_to_shoot, target_type, ammo, distance, description, range_img, preview_img, visible
@@ -226,14 +226,16 @@ export async function PUT(req: NextRequest) {
       previewURL,
       drillInfo.get('visible'),
       id,
+      oldRangeImgURL,
+      oldPreviewImgURL,
     ];
     const updatedDrill = await pool.query(query, values);
     const newDrill = updatedDrill.rows[0];
 
-    if (oldRangeImgURL) {
+    if (rangeURL && oldRangeImgURL) {
       await deleteImg(oldRangeImgURL);
     }
-    if (oldPreviewImgURL) {
+    if (previewURL && oldPreviewImgURL) {
       await deleteImg(oldPreviewImgURL);
     }
     return NextResponse.json(
