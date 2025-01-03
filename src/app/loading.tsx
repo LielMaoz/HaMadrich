@@ -25,6 +25,7 @@ export default function Loading() {
             maxWidth: "40%",
             height: "auto",
           }}
+          unoptimized={true}
         />
         <p style={{
         marginTop: "20px",
