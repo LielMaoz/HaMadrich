@@ -1,9 +1,7 @@
-import { Suspense } from "react";
 import type { Metadata } from 'next';
 import './globals.css';
 import NavBar from './components/Navbar';
 import Footer from './components/Footer';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,17 +13,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="he" dir="rtl">
-      <body className="flex flex-col min-h-screen">
-        <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID as string}>
-            <NavBar />
-            <Suspense fallback={<p>טוען...</p>}>
-              <main className="flex-1">{children}</main>
-            </Suspense>
-            <Footer />
-        </GoogleOAuthProvider>
+      <body>
+        <NavBar />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

@@ -9,7 +9,7 @@ export const decodeJWT = (): DecodedJWT | null => {
 
   try {
     return jwtDecode<DecodedJWT>(token); // Decode and cast the token to the DecodedJWT type
-  } catch {
+  } catch (error) {
     return null; // Return null in case of any error
   }
 };

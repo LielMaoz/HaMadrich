@@ -1,12 +1,10 @@
 'use client';
 
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { User } from '../lib/types';
+import { UserAuthData } from '../lib/types';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { GoogleButton } from '../components/GoogleButton';
-import Image from 'next/image';
 
-const Signup = () => {
+const signup = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [passwordStrength, setPasswordStrength] = useState<boolean>(true);
@@ -16,7 +14,7 @@ const Signup = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
     useState(false);
-  const [formData, setFormData] = useState<User>({
+  const [formData, setFormData] = useState<UserAuthData>({
     firstName: '',
     lastName: '',
     email: '',
@@ -101,16 +99,13 @@ const Signup = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
       if (res.ok) {
-        const { token } = await res.json();
-        localStorage.setItem('jwtToken', token);
         window.location.href = '/'; // Navigate to the home page
       } else {
         const errorData = await res.json();
         setMessage(errorData?.error || 'ההרשמה נכשלה. אנא נסה שוב.');
       }
-    } catch {
+    } catch (error) {
       setMessage('משהו השתבש. אנא נסה שוב.');
     } finally {
       setLoading(false);
@@ -120,9 +115,6 @@ const Signup = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">הרשמה</h2>
-
-        <GoogleButton onFail={() => setMessage('ההתחברות עם גוגל לא הצליחה')} />
-
         <form onSubmit={handleSubmit} noValidate>
           <div className="mb-4">
             <input
@@ -169,14 +161,8 @@ const Signup = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="סיסמה"
               />
-              <Image
-                src={
-                  isPasswordVisible
-                    ? '/icons/eye-open.png'
-                    : '/icons/eye-closed.png'
-                }
-                width={500}
-                height={500}
+              <img
+                src={isPasswordVisible ? '/eye-open.png' : '/eye-closed.png'}
                 alt="Toggle Password Visibility"
                 onClick={handlePasswordToggle}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer w-5 h-5"
@@ -199,14 +185,10 @@ const Signup = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 placeholder="אימות סיסמה"
               />
-              <Image
+              <img
                 src={
-                  isConfirmPasswordVisible
-                    ? '/icons/eye-open.png'
-                    : '/icons/eye-closed.png'
+                  isConfirmPasswordVisible ? '/eye-open.png' : '/eye-closed.png'
                 }
-                width={500}
-                height={500}
                 alt="Toggle Confirm Password Visibility"
                 onClick={handleConfirmPasswordToggle}
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer w-5 h-5"
@@ -235,4 +217,4 @@ const Signup = () => {
     </div>
   );
 };
-export default Signup;
+export default signup;

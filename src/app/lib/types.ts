@@ -1,31 +1,22 @@
 export interface User {
-  id?: number;
+  id: number;
   email: string;
+  password: string;
   firstName: string;
   lastName: string;
-  password?: string;
-  permission?: 'admin' | 'regular'; // Default value is "regular"
+  permission: 'admin' | 'regular'; // Default value is "regular"
+}
+
+export interface UserAuthData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }
 
 // Define the structure of the decoded JWT
 export interface DecodedJWT {
   sub: string;
   role: string;
-  name: string;
-}
-
-//Define the structure of the drill(AKA trainings table)
-export interface Drill {
-  id: number;
-  training_name: string;
-  drill_type: string;
-  weapon_type: string;
-  time_to_shoot: number; //string for now to check
-  target_type: string;
-  ammo: number;
-  distance: number;
-  description: string;
-  preview_img: string;
-  range_img: string;
-  visible: boolean;
+  username: string;
 }

@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
 import { compare } from 'bcrypt';
-//import { SignJWT } from 'jose';
+import { SignJWT } from 'jose';
 import pool from '@/app/lib/db';
-import { createJwtToken } from '../token';
-import { User } from '@/app/lib/types';
 
 // This endpoint authenticates the user and generates a JWT token
 export async function POST(req: Request) {
@@ -25,15 +23,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
   }
 
-  const userData: User = {
-    id: user.id,
-    email: user.email,
-    permission: user.permission,
-    firstName: user.first_name,
-    lastName: user.last_name,
-  };
-  
-  const jwt = await createJwtToken( userData );
+  // Create JWT token with user id and role
+  const secret = new TextEncoder().encode(
+    process.env.JWT_SECRET || 'default_secret'
+  ); // Make sure to set JWT_SECRET in .env file
+  const jwt = await new SignJWT({
+    sub: user.id, // The primary key is ID
+    role: user.permission, // User's role (admin, regular)
+    username: `${user.first_name} ${user.last_name}`, // Combine first and last name
+  })
+    .setProtectedHeader({ alg: 'HS256' }) // Set the algorithm
+    .setIssuedAt() // Automatically sets the timestamp of the JWT creation
+    .setExpirationTime('2h') // Set expiration time
+    .sign(secret); // Sign the token with a secret key
 
   // Return JWT token in the response
   return NextResponse.json({ token: jwt });
