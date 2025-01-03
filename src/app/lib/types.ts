@@ -29,3 +29,22 @@ export interface Drill {
   range_img: string;
   visible: boolean;
 }
+
+export interface ProfessionalContent {
+  id: number;
+  name: string;
+  description: string;
+  prvImg: string;
+  contentImg: string;
+  link1Description: string;
+  link1: string;
+  link2Description: string;
+  link2: string;
+  link3Description: string;
+  link3: string;
+  link4Description: string;
+  link4: string;
+  link5Description: string;
+  link5: string;
+  visible: boolean;
+}
