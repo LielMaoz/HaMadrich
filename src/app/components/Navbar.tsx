@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { decodeJWT } from '@/utils/jwtDecoder';
+import { checkToken, checkTokenExpiration, decodeJWT } from '@/utils/jwtDecoder';
 import { googleLogout } from '@react-oauth/google';
 
 import {
@@ -15,11 +15,6 @@ import {
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
 import { Search } from 'lucide-react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-
-// Function to check if a JWT token exists in localStorage
-const checkToken = (): boolean => {
-  return !!localStorage.getItem('jwtToken');
-};
 
 // Reusable component for navigation links
 const NavigationLink = ({
@@ -180,19 +175,31 @@ const NavBar = () => {
 
   // Check for a token and update login state
   useEffect(() => {
-    const tokenExists = checkToken();
-    setIsLoggedIn(tokenExists);
-    if (tokenExists) {
-      // Decode the JWT and parse the username from it
-      const decoded = decodeJWT();
-      if (decoded) {
-        let username = '';
-        if (decoded.name) {
-          username = decoded.name;
+    const checkTokenStatus = () => {
+      const tokenExists = checkToken();
+      setIsLoggedIn(tokenExists);
+
+      if (tokenExists) {
+        if(checkTokenExpiration()){
+          handleLogout();
+        } else{
+        // If the token is valid and has not expired- decode the JWT and parse the username from it
+          const decoded = decodeJWT();
+          if (decoded) {
+            let username = '';
+            if (decoded.name) {
+              username = decoded.name;
+            }
+            setUserName(username);
+          }
         }
-        setUserName(username);
       }
-    }
+    };
+  
+    checkTokenStatus();
+    const intervalId = setInterval(checkTokenStatus, 3000000);//Check every 5 minutes
+
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleLogout = () => {
