@@ -10,7 +10,7 @@ const DrillCardPreview = () => {
   const baseUrl = 'http://localhost:3000';
   const [drill, setDrill] = useState<Drill>({
     id: 0,
-    training_name: 'PAY ATTENTION NOT FETCHING DATA',
+    training_name: '',
     drill_type: 'string',
     weapon_type: 'string',
     time_to_shoot: 0,
