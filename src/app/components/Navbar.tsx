@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { decodeJWT } from '@/utils/jwtDecoder';
+import { googleLogout } from '@react-oauth/google';
 
 import {
   NavigationMenu,
@@ -60,7 +61,12 @@ const HomePage = () => {
 
 const SignIn = () => {
   return (
-    <NavigationLink href="/login" component={NavigationMenuLink} text="כניסה" />
+    <NavigationLink
+    href="/login"
+    component={NavigationMenuLink}
+    text="כניסה"
+    additionalClasses="focus:border-b-2 focus:border-white active:ring-2 active:ring-white"
+    />
   );
 };
 
@@ -70,6 +76,7 @@ const SignUp = () => {
       href="/signup"
       component={NavigationMenuLink}
       text="הרשמה"
+      additionalClasses="focus:border-b-2 focus:border-white active:ring-2 active:ring-white"
     />
   );
 };
@@ -77,7 +84,13 @@ const SignUp = () => {
 const SearchBar = () => {
   return (
     <div className="flex items-center space-x-reverse">
-      <div className="flex items-center bg-gray-700 rounded-full px-4 py-2">
+      {/* Search button for small screens */}
+      <button className="block sm:hidden p-2 bg-gray-700 rounded-full">
+        <Search className="text-white w-5 h-5" />
+      </button>
+
+      {/* Search bar for large screens */}
+      <div className="hidden sm:flex items-center bg-gray-700 rounded-full px-4 py-2">
         <Search className="text-white w-5 h-5" />
         <input
           type="text"
@@ -99,7 +112,7 @@ const UserMenuDropDown = ({
   username: string;
 }) => {
   return (
-    <div className="absolute left-1/2 transform -translate-x-1/2 mt-6 bg-gray-800 text-white rounded-lg shadow-lg w-48 z-50">
+    <div className="absolute left-1/2 transform -translate-x-1/2 translate-y-16 bg-gray-800 text-white rounded-lg shadow-lg w-48 z-50 p-2 overflow-visible pointer-events-auto">
       <ul>
         {/*<li>
                         <Link href="/settings">
@@ -127,27 +140,34 @@ const UserMenuDropDown = ({
 const UserMenu = ({
   userName,
   isMenuOpen,
-  toggleMenu,
+  setIsMenuOpen,
   handleLogout,
 }: {
   userName: string;
   isMenuOpen: boolean;
-  toggleMenu: () => void;
+  setIsMenuOpen: (state: boolean) => void;
   handleLogout: () => void;
 }) => {
   return (
     <NavigationMenuItem>
-      <div className="relative">
-        <button
-          className="flex items-center justify-center w-10 h-10 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition-colors"
-          onClick={toggleMenu}
-        >
+      <div
+        className="relative flex items-center justify-center group w-16 h-16 mx-auto"
+        onMouseEnter={() => setIsMenuOpen(true)}
+        onMouseLeave={() => setIsMenuOpen(false)}
+      >
+        <button className="flex items-center justify-center w-10 h-10 bg-gray-700 text-white rounded-full hover:bg-gray-600 transition-colors">
           {/* User icon */}
           <i className="fa-solid fa-user text-lg"></i>
         </button>
-        {isMenuOpen ? (
-          <UserMenuDropDown handleLogout={handleLogout} username={userName} />
-        ) : null}
+        <div
+          className="w-full h-full absolute top-0 left-0"
+          onMouseEnter={() => setIsMenuOpen(true)}
+          onMouseLeave={() => setIsMenuOpen(false)}
+        >
+          {isMenuOpen ? (
+            <UserMenuDropDown handleLogout={handleLogout} username={userName} />
+          ) : null}
+        </div>
       </div>
     </NavigationMenuItem>
   );
@@ -166,7 +186,10 @@ const NavBar = () => {
       // Decode the JWT and parse the username from it
       const decoded = decodeJWT();
       if (decoded) {
-        const username = decoded.username;
+        let username = '';
+        if (decoded.name) {
+          username = decoded.name;
+        }
         setUserName(username);
       }
     }
@@ -176,25 +199,27 @@ const NavBar = () => {
     localStorage.removeItem('jwtToken');
     setUserName('');
     setIsLoggedIn(false);
-  };
-
-  // Toggle the user menu dropdown
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+    // google log out
+    googleLogout();
+    window.location.href = '/';
   };
 
   return (
-    <nav className="bg-gray-900 text-white w-full p-4" dir="rtl">
+    <nav
+      className="bg-gray-900 text-white w-full p-4 flex items-center"
+      dir="rtl"
+      style={{ position: 'sticky', top: 0, zIndex: 20 }}
+    >
       <NavigationMenu>
         <NavigationMenuList
           className="flex justify-between items-center w-full"
           dir="rtl"
         >
-          <div>
+          <div className="ml-2">
             <HomePage />
           </div>
 
-          <div className="flex space-x-4 space-x-reverse">
+          <div className="flex space-x-2 space-x-reverse">
             {!isLoggedIn ? (
               <>
                 <SignIn />
@@ -204,7 +229,7 @@ const NavBar = () => {
               <UserMenu
                 userName={userName}
                 isMenuOpen={isMenuOpen}
-                toggleMenu={toggleMenu}
+                setIsMenuOpen={setIsMenuOpen}
                 handleLogout={handleLogout}
               />
             )}

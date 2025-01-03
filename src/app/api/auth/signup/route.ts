@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { hashPassword } from '@/app/lib/auth';
 import pool from '@/app/lib/db';
-import { UserAuthData } from '@/app/lib/types';
+import { createJwtToken } from '../token';
+import { User } from '@/app/lib/types';
+import bcrypt from 'bcrypt';
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -41,23 +42,34 @@ export async function POST(req: NextRequest) {
     }
 
     // Hash the password
-    const passwordHash = await hashPassword(password);
+    const passwordHash = await bcrypt.hash(password, 10);
 
     // Insert user into database
     const query = `
       INSERT INTO users (email, password, first_name, last_name)
       VALUES ($1, $2, $3, $4)
-      RETURNING email, first_name, last_name;
+      RETURNING id, email, first_name, last_name;
     `;
-    const user = await pool.query<UserAuthData>(query, [
+
+    const user = await pool.query(query, [
       email,
       passwordHash,
       firstName,
       lastName,
     ]);
 
-    // Respond with the created user
-    return NextResponse.json({ user: user.rows[0] }, { status: 201 });
+    const userData: User = {
+      id: user.rows[0].id,
+      email: user.rows[0].email,
+      permission: user.rows[0].permission,
+      firstName: user.rows[0].first_name,
+      lastName: user.rows[0].last_name,
+    };
+
+    const jwt = await createJwtToken(userData);
+
+    // Return the token in response
+    return NextResponse.json({ user: userData, token: jwt }, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
