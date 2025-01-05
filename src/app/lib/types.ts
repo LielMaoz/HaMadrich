@@ -35,7 +35,6 @@ export interface ProfessionalContent {
   name: string;
   description: string;
   prvImg: string;
-  contentImg: string;
   link1Description: string;
   link1: string;
   link2Description: string;
