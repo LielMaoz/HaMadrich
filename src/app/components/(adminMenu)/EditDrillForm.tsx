@@ -302,7 +302,8 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                         <SelectContent>
                           <SelectItem value="איפוסון">איפוסון</SelectItem>
                           <SelectItem value="הישגית">הישגית</SelectItem>
-                          <SelectItem value="גוף">גוף</SelectItem>
+                          <SelectItem value="גוף/פלאח">גוף/פלאח</SelectItem>
+                          <SelectItem value="מטרה בתנועה">מטרה בתנועה</SelectItem>
                           <SelectItem value="רחפן">רחפן</SelectItem>
                         </SelectContent>
                       </Select>
@@ -480,7 +481,7 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                 {msg}
               </p>
               <AlertDialogCancel>ביטול</AlertDialogCancel>
-              <Button type="submit" form="myForm">{loading ? <LoadingSpinner /> : 'המשך'}</Button>
+              <Button type="submit" form="myForm" disabled={loading}>{loading ? <LoadingSpinner /> : 'המשך'}</Button>
             </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

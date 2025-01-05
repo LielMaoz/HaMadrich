@@ -25,11 +25,12 @@ export const DrillListCard = ({ ...drill }: Drill) => {
         <div className="relative w-full h-80">
           <div className="relative w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
             <Image
-              src={drill.preview_img}
+              src={drill.preview_img || '/images/Shootingloader.gif'} // change with different placeholder pic
               alt={drill.training_name}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover"
+              unoptimized
             />
           </div>
 
