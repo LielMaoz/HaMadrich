@@ -267,7 +267,8 @@ export const AddDrillForm = () => {
                         <SelectContent>
                           <SelectItem value="איפוסון">איפוסון</SelectItem>
                           <SelectItem value="הישגית">הישגית</SelectItem>
-                          <SelectItem value="גוף">גוף</SelectItem>
+                          <SelectItem value="גוף/פלאח">גוף/פלאח</SelectItem>
+                          <SelectItem value="מטרה בתנועה">מטרה בתנועה</SelectItem>
                           <SelectItem value="רחפן">רחפן</SelectItem>
                         </SelectContent>
                       </Select>
