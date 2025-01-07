@@ -3,14 +3,26 @@
 import { useEffect, useState } from 'react';
 import CategoryCard from '../components/CategoryCard';
 import { categories } from '@/data/home-categories';
+import { checkToken, checkTokenExpiration } from '@/utils/jwtDecoder';
 
 export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Check for a token and update login state
-    const tokenExists = !!localStorage.getItem('jwtToken');
-    setIsLoggedIn(tokenExists);
+    const checkTokenStatus = () => {
+      const tokenExists = checkToken();
+      if (tokenExists && !checkTokenExpiration()){
+        setIsLoggedIn(true);
+      } else{
+        setIsLoggedIn(false);
+      }
+    };
+    
+    checkTokenStatus();
+    const intervalId = setInterval(checkTokenStatus, 3000000);//Check every 5 minutes
+  
+    return () => clearInterval(intervalId);
   }, []);
 
   return (

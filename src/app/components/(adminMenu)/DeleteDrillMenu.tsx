@@ -1,6 +1,6 @@
 import {
   AlertDialog,
-  AlertDialogAction,
+  //AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { useState } from 'react';
 import LoadingSpinner from '../LoadingSpinner';
+import { Button } from '@/components/ui/button';
 
 export const DeleteDrillMenu = ({ id }: { id: number }) => {
   const [msg, setMsg] = useState<string>("");
@@ -32,7 +33,7 @@ export const DeleteDrillMenu = ({ id }: { id: number }) => {
       if (res.ok) {
         // telling user his action is succsesful and refreshing screen after a delay
         setMsg("הפעולה בוצעה");
-        await new Promise((res)=> setTimeout(res, 2000));
+        await new Promise((res)=> setTimeout(res, 500));
         window.location.reload();
       } else {
         setMsg("הפעולה נכשלה");
@@ -67,7 +68,7 @@ export const DeleteDrillMenu = ({ id }: { id: number }) => {
             {msg}
           </p>
           <AlertDialogCancel>ביטול</AlertDialogCancel>
-          <AlertDialogAction onClick={handleClick} disabled={loading}>{loading ? <LoadingSpinner /> : 'המשך'}</AlertDialogAction>
+          <Button onClick={handleClick} disabled={loading}>{loading ? <LoadingSpinner /> : 'המשך'}</Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

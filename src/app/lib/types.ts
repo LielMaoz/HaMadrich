@@ -12,6 +12,7 @@ export interface DecodedJWT {
   sub: string;
   role: string;
   name: string;
+  exp: number;  // Expiration time
 }
 
 //Define the structure of the drill(AKA trainings table)
