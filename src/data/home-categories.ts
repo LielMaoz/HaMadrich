@@ -27,7 +27,7 @@ export const categories: CategoryProps[] = [
   {
     title: 'תוכן מקצועי',
     image: '/images/homepage/professional-content.png',
-    link: '/professional-content-list',
+    link: '/professional-content',
     description: 'כל התוכן המקצועי כדי להכיר את האמלח שלך',
   },
   {
