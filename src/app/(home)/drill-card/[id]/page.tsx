@@ -4,24 +4,11 @@ import { Drill } from '@/app/lib/types';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const DrillCardPreview = () => {
+const DrillCardPage = () => {
   const params = useParams();
   const id = params.id;
   const baseUrl = 'http://localhost:3000';
-  const [drill, setDrill] = useState<Drill>({
-    id: 0,
-    training_name: '',
-    drill_type: 'string',
-    weapon_type: 'string',
-    time_to_shoot: 0,
-    target_type: 'string',
-    ammo: 0,
-    distance: 0,
-    description: 'string',
-    preview_img: '/',
-    range_img: '/',
-    visible: false,
-  });
+  const [drill, setDrill] = useState<Drill | null>(null);
 
   useEffect(() => {
     const fetchDrill = async () => {
@@ -44,7 +31,11 @@ const DrillCardPreview = () => {
     fetchDrill();
   }, [id]);
 
+  if (!drill) {
+    return;
+  }
+
   return <DrillCard {...drill} />;
 };
 
-export default DrillCardPreview;
+export default DrillCardPage;
