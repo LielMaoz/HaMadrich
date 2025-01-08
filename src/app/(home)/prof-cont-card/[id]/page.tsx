@@ -11,9 +11,8 @@ const ProfessionalContentPage = () => {
   const [profCont, setProfCont] = useState<ProfessionalContent>({
     id: 11111,
     name: '',
-    description: 'string',
+    description: '',
     prvImg: '/',
-    contentImg: '/',
     link1Description: '/',
     link1: '/',
     link2Description: '/',

@@ -54,6 +54,15 @@ export const ProfessionalContentListCard = ({
       case 'חולית':
         return `/images/profContStaticImages/חולית.jpg`;
 
+      case 'מעצורים':
+        return `/images/profContStaticImages/מעצורים.jpg`;
+
+      case 'עמעם':
+        return `/images/profContStaticImages/עמעם.jpg`;
+
+      case 'זיווד נכון':
+        return `/images/profContStaticImages/זיווד.jpg`;
+
       default:
       case 'חולית':
         return `/images/profContStaticImages/חולית.jpg`;
