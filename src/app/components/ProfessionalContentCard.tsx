@@ -41,7 +41,9 @@ export function ProfessionalContentCard({ ...profCont }: ProfessionalContent) {
       <h1 className="text-4xl font-bold text-gray-900 mb-6 text-center">
         {profCont.name}
       </h1>
-      <p className="text-lg text-gray-700 mb-12 text-center">
+      <p
+        className="text-lg text-gray-700 mb-12 text-center"
+        style={{ whiteSpace: 'pre-line' }}>
         {profCont.description}
       </p>
 
