@@ -1,30 +1,13 @@
-import React from 'react';
-
-const FirstAidTeamworkPage: React.FC = () => {
-    return (
-        <div>
-            <h1>First Aid Teamwork</h1>
-            <p>Welcome to the First Aid Teamwork page. Here you will find resources and information on how to effectively work as a team in first aid situations.</p>
-            <section>
-                <h2>Team Roles</h2>
-                <ul>
-                    <li>Leader: Coordinates the team and makes decisions.</li>
-                    <li>First Responder: Provides immediate care to the injured.</li>
-                    <li>Communicator: Contacts emergency services and relays information.</li>
-                    <li>Logistics: Manages supplies and equipment.</li>
-                </ul>
-            </section>
-            <section>
-                <h2>Best Practices</h2>
-                <ol>
-                    <li>Stay calm and focused.</li>
-                    <li>Communicate clearly and effectively.</li>
-                    <li>Follow established protocols and procedures.</li>
-                    <li>Work together and support each other.</li>
-                </ol>
-            </section>
-        </div>
-    );
-};
-
-export default FirstAidTeamworkPage;
+export default function FirstAid() {
+  return (
+    <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-zinc-900 mb-4">עזרה ראשונה</h1>
+        <p className="text-lg text-zinc-600">
+          תרגל את יכולות הרפואה שלך ובצע תרגולי עזרה ראשונה
+        </p>
+        <p className="mt-4 text-zinc-500">מידע על עזרה ראשונה יתווסף בקרוב.</p>
+      </div>
+    </div>
+  );
+}

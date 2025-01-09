@@ -25,7 +25,7 @@ const DryDrillExercises = async () => {
 
   // adding the list of drills to the page
   return (
-    <div className="min-h-screen my-4 flex flex-col gap-4">
+    <div className="min-h-screen my-4 mx-1 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:mx-12 2xl:mx-72">
       {drillList.map((drill) => (
         <div key={drill.id} className="flex justify-center">
           <DrillListCard {...drill} />

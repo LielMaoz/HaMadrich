@@ -38,6 +38,7 @@ export function DrillCard({ ...drill }: Drill): JSX.Element {
               width={300}
               height={200}
               className="rounded-lg shadow-lg"
+              priority
             />
           </div>
         </div>
