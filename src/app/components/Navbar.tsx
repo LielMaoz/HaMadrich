@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { checkToken, checkTokenExpiration, decodeJWT } from '@/utils/jwtDecoder';
 import { googleLogout } from '@react-oauth/google';
+import SearchBar from './SearchBar';
 
 import {
   NavigationMenu,
@@ -13,7 +14,6 @@ import {
 } from '@/components/ui/navigation-menu';
 
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
-import { Search } from 'lucide-react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 // Reusable component for navigation links
@@ -73,28 +73,6 @@ const SignUp = () => {
       text="הרשמה"
       additionalClasses="focus:border-b-2 focus:border-white active:ring-2 active:ring-white"
     />
-  );
-};
-
-const SearchBar = () => {
-  return (
-    <div className="flex items-center space-x-reverse">
-      {/* Search button for small screens */}
-      <button className="block sm:hidden p-2 bg-gray-700 rounded-full">
-        <Search className="text-white w-5 h-5" />
-      </button>
-
-      {/* Search bar for large screens */}
-      <div className="hidden sm:flex items-center bg-gray-700 rounded-full px-4 py-2">
-        <Search className="text-white w-5 h-5" />
-        <input
-          type="text"
-          placeholder="חיפוש.."
-          dir="rtl"
-          className="px-4 py-2 bg-gray-700 text-white rounded-full w-60 focus:outline-none"
-        />
-      </div>
-    </div>
   );
 };
 
@@ -177,7 +155,6 @@ const NavBar = () => {
   useEffect(() => {
     const checkTokenStatus = () => {
       const tokenExists = checkToken();
-      setIsLoggedIn(tokenExists);
 
       if (tokenExists) {
         if(checkTokenExpiration()){
@@ -185,21 +162,27 @@ const NavBar = () => {
         } else{
         // If the token is valid and has not expired- decode the JWT and parse the username from it
           const decoded = decodeJWT();
-          if (decoded) {
-            let username = '';
-            if (decoded.name) {
-              username = decoded.name;
-            }
-            setUserName(username);
-          }
+          setIsLoggedIn(true);
+          setUserName(decoded?.name || '');
         }
+      } else {
+        setIsLoggedIn(false);
+        setUserName('');
       }
     };
-  
-    checkTokenStatus();
-    const intervalId = setInterval(checkTokenStatus, 3000000);//Check every 5 minutes
+    
+    checkTokenStatus(); //Initial check
+    
+    const intervalId = setInterval(checkTokenStatus, 3000000); //Periodic checks every 5 minutes
 
-    return () => clearInterval(intervalId);
+    // Listen for changes in localStorage
+    const handleStorageChange = () => checkTokenStatus();
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('storage', handleStorageChange);
+    }
   }, []);
 
   const handleLogout = () => {
@@ -242,7 +225,7 @@ const NavBar = () => {
             )}
           </div>
 
-          <div className="flex mr-auto">
+          <div className="flex mr-aut">
             <SearchBar />
           </div>
         </NavigationMenuList>

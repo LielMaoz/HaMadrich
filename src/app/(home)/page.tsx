@@ -19,10 +19,18 @@ export default function Home() {
       }
     };
     
-    checkTokenStatus();
-    const intervalId = setInterval(checkTokenStatus, 3000000);//Check every 5 minutes
-  
-    return () => clearInterval(intervalId);
+    checkTokenStatus(); //Initial check
+
+    const intervalId = setInterval(checkTokenStatus, 3000000); //Periodic checks every 5 minutes
+    
+    // Listen for changes in localStorage
+    const handleStorageChange = () => checkTokenStatus();
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
 
   return (
