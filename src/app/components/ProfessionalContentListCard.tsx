@@ -34,7 +34,7 @@ export const ProfessionalContentListCard = ({
         return `/images/profContStaticImages/מאג.jpg`;
 
       case 'מטאדור':
-        return `/images/profContStaticImages/מטאדור.jpeg`;
+        return `/images/profContStaticImages/מטאדור.jpg`;
 
       case 'מכפל':
         return `/images/profContStaticImages/מכפל.jpg`;
@@ -46,7 +46,7 @@ export const ProfessionalContentListCard = ({
         return `/images/profContStaticImages/ציין.jpg`;
 
       case 'קליעה כללי':
-        return `/images/profContStaticImages/קליעה כללי.jpeg`;
+        return `/images/profContStaticImages/קליעה כללי.jpg`;
 
       case 'רובאי':
         return `/images/profContStaticImages/רובאי.jpg`;

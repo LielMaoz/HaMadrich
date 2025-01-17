@@ -1,13 +1,14 @@
-import { FirstAidListCard } from '@/app/components/FirstAidListCard'; // Ensure correct naming convention
+import { FirstAidListCard } from '@/app/components/FirstAidListCard';
 import type { FirstAidContent } from '@/app/lib/types';
+import FirstAidContentPage from '../first-aid/page';
 
-const FirstAidContentPage = async () => {
+const FirstAidContent = async () => {
   // fetching data for the items
   const baseUrl = 'http://localhost:3000';
-  let firstAidContentList: FirstAidContent[];
+  let firstAidList: FirstAidContent[];
 
   try {
-    const response = await fetch(`${baseUrl}/api/firstAid`);
+    const response = await fetch(`${baseUrl}/api/firstaid`);
 
     console.log('Data fetched from API with NO cache');
     if (!response.ok) {
@@ -15,7 +16,7 @@ const FirstAidContentPage = async () => {
     }
 
     const { data }: { data: FirstAidContent[] } = await response.json();
-    firstAidContentList = data;
+    firstAidList = data;
   } catch (error) {
     console.error('Fetch error:', error);
 
@@ -25,7 +26,7 @@ const FirstAidContentPage = async () => {
   // adding the list of first aid to the page
   return (
     <div className="min-h-screen my-4 flex flex-col gap-4">
-      {firstAidContentList.map((firstAid) => (
+      {firstAidList.map((firstAid) => (
         <div key={firstAid.id} className="flex justify-center">
           <FirstAidListCard {...firstAid} />
         </div>
