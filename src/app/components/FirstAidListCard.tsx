@@ -38,8 +38,8 @@ export const FirstAidListCard = ({ ...firstAid }: FirstAidContent) => {
       case 'עבודה עם מטפל בכיר':
         return `/images/firstAidStaticImages/עבודה עם מטפל בכיר.jpg`;
 
-      case 'פגיעות אקלים והדף':
-        return `/images/firstAidStaticImages/פגיעות אקלים והדף.jpg`;
+      case 'פגיעות הדף ואקלים':
+        return `/images/firstAidStaticImages/פגיעות הדף ואקלים.jpg`;
 
       case 'סוגי פגיעות':
         return `/images/firstAidStaticImages/סוגי פגיעות.jpeg`;
