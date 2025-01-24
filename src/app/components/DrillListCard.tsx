@@ -34,7 +34,7 @@ export const DrillListCard = ({ ...drill }: Drill) => {
           </div>
 
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <h2 className="text-3xl font-semibold text-zinc-900 bg-white bg-opacity-80 p-2 rounded-md">
+            <h2 className="text-3xl font-semibold text-zinc-900 bg-white bg-opacity-80 p-2 rounded-md text-center">
               {`${drill.training_name} ${drill.visible ? '' : '(מוסתר)'}`}
             </h2>
           </div>
