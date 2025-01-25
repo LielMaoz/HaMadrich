@@ -43,7 +43,7 @@ const DryDrillExercises = async () => {
           <h1 className="mb-4 text-4xl font-bold text-zinc-900">
             תרגילים יבשים
           </h1>
-          <p className="max-w-2xl mx-auto mb-8 text-xl text-zinc-600">
+          <p className="max-w-2xl mx-auto mb-8 text-[18px] text-zinc-600">
             לחץ על האימון הרצוי כדי לקבל מידע נוסף אודותיו
           </p>
         </div>
