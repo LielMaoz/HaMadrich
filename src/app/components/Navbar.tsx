@@ -196,7 +196,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className="bg-gray-900 text-white w-full p-4 flex items-center"
+      className="bg-gray-900 text-white w-full p-4 flex items-center justify-between"
       dir="rtl"
       style={{ position: 'sticky', top: 0, zIndex: 20 }}
     >
@@ -224,12 +224,11 @@ const NavBar = () => {
               />
             )}
           </div>
-
-          <div className="flex mr-aut">
-            <SearchBar />
-          </div>
         </NavigationMenuList>
       </NavigationMenu>
+      <div className="flex mr-auto">
+        <SearchBar />
+      </div>
     </nav>
   );
 };

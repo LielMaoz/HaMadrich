@@ -1,4 +1,4 @@
-import { ProfessionalContent } from '../lib/types';
+import { FirstAidContent } from '../lib/types';
 import React from 'react';
 
 function extractYouTubeId(url: string): string | null {
@@ -9,42 +9,42 @@ function extractYouTubeId(url: string): string | null {
   return null;
 }
 
-export function ProfessionalContentCard({ ...profCont }: ProfessionalContent) {
+export function FirstAirdContentCard({ ...firstAid }: FirstAidContent) {
   const baseURL = 'https://www.youtube.com/embed/';
   const videos = [
     {
-      url: extractYouTubeId(profCont.link1),
-      description: profCont.link1Description,
+      url: extractYouTubeId(firstAid.link1),
+      description: firstAid.link1Description,
     },
     {
-      url: extractYouTubeId(profCont.link2),
-      description: profCont.link2Description,
+      url: extractYouTubeId(firstAid.link2),
+      description: firstAid.link2Description,
     },
     {
-      url: extractYouTubeId(profCont.link3),
-      description: profCont.link3Description,
+      url: extractYouTubeId(firstAid.link3),
+      description: firstAid.link3Description,
     },
     {
-      url: extractYouTubeId(profCont.link4),
-      description: profCont.link4Description,
+      url: extractYouTubeId(firstAid.link4),
+      description: firstAid.link4Description,
     },
     {
-      url: extractYouTubeId(profCont.link5),
-      description: profCont.link5Description,
+      url: extractYouTubeId(firstAid.link5),
+      description: firstAid.link5Description,
     },
   ].filter((video) => video.url !== null); // Filter out videos with null URLs
 
-  if (!profCont.visible) return null; // show only in visible mode
+  if (!firstAid.visible) return null; // show only in visible mode
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8 bg-white rounded-lg shadow-lg">
       <h1 className="text-4xl font-bold text-gray-900 mb-6 text-center">
-        {profCont.name}
+        {firstAid.name}
       </h1>
       <p
         className="text-lg text-gray-700 mb-12 text-center"
         style={{ whiteSpace: 'pre-line' }}>
-        {profCont.description}
+        {firstAid.description}
       </p>
 
       <div className="space-y-12">

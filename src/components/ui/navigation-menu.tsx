@@ -51,7 +51,7 @@ const NavigationMenuTrigger = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Trigger
     ref={ref}
-    style={{ backgroundColor: 'red', color: 'white' }} // שינוי צבע ישיר
+    style={{ backgroundColor: 'red', color: 'white' }}
     className={cn(
       navigationMenuTriggerStyle(), 'group', className)}
     {...props}

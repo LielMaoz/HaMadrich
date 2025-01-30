@@ -12,7 +12,7 @@ export interface DecodedJWT {
   sub: string;
   role: string;
   name: string;
-  exp: number;  // Expiration time
+  exp: number; // Expiration time
 }
 
 //Define the structure of the drill(AKA trainings table)
@@ -32,6 +32,24 @@ export interface Drill {
 }
 
 export interface ProfessionalContent {
+  id: number;
+  name: string;
+  description: string;
+  prvImg: string;
+  link1Description: string;
+  link1: string;
+  link2Description: string;
+  link2: string;
+  link3Description: string;
+  link3: string;
+  link4Description: string;
+  link4: string;
+  link5Description: string;
+  link5: string;
+  visible: boolean;
+}
+
+export interface FirstAidContent {
   id: number;
   name: string;
   description: string;
