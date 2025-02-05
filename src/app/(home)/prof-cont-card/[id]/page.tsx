@@ -1,6 +1,7 @@
 'use client';
 import { ProfessionalContentCard } from '@/app/components/ProfessionalContentCard';
 import { ProfessionalContent } from '@/app/lib/types';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -50,7 +51,18 @@ const ProfessionalContentPage = () => {
     fetchProfCont();
   }, [id]);
 
-  return <ProfessionalContentCard {...profCont} />;
+  return (
+  <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-100 p-6 relative">
+      <Link
+        href='/professional-content-list'
+        className="absolute top-6 right-6 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition mb-4"
+      >
+        → לדף תוכן מקצועי
+      </Link>
+
+      <ProfessionalContentCard {...profCont} />
+    </div>
+  );
 };
 
 export default ProfessionalContentPage;

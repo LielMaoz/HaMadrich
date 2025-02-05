@@ -27,10 +27,9 @@ const DryDrillExercises = async () => {
   // adding the list of drills to the page
   return (
     <div className="min-h-screen bg-zinc-100 p-6">
-      {/* כפתור חזרה לעמוד הבית */}
       <div className="flex justify-start mb-4">
         <Link href="/" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-          → לעמוד הקודם
+          → לדף הבית
         </Link>
       </div>
 
