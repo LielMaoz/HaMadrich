@@ -75,7 +75,12 @@ export const ProfessionalContentListCard = ({
     <div
       className={`w-full max-w-4xl bg-white rounded-lg shadow-md overflow-hidden 
       ${profCont.visible ? '' : 'filter grayscale'} 
-      ${!isAdmin && !profCont.visible ? 'hidden' : 'block'}`}>
+      ${!isAdmin && !profCont.visible ? 'hidden' : 'block'}`}
+    >
+      {isAdmin && (
+        <EditMenu className="absolute z-10 w-16 h-16" data={profCont} />
+      )}
+
       <Link href={`/prof-cont-card/${profCont.id}`}>
         <div className="relative w-full h-80">
           <div className="absolute inset-0 flex items-center justify-center hover:shadow-xl">

@@ -36,15 +36,15 @@ export interface ProfessionalContent {
   name: string;
   description: string;
   prvImg: string;
-  link1Description: string;
+  link1description: string;
   link1: string;
-  link2Description: string;
+  link2description: string;
   link2: string;
-  link3Description: string;
+  link3description: string;
   link3: string;
-  link4Description: string;
+  link4description: string;
   link4: string;
-  link5Description: string;
+  link5description: string;
   link5: string;
   visible: boolean;
 }
@@ -54,15 +54,15 @@ export interface FirstAidContent {
   name: string;
   description: string;
   prvImg: string;
-  link1Description: string;
+  link1description: string;
   link1: string;
-  link2Description: string;
+  link2description: string;
   link2: string;
-  link3Description: string;
+  link3description: string;
   link3: string;
-  link4Description: string;
+  link4description: string;
   link4: string;
-  link5Description: string;
+  link5description: string;
   link5: string;
   visible: boolean;
 }

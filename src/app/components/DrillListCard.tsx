@@ -20,7 +20,7 @@ export const DrillListCard = ({ ...drill }: Drill) => {
       ${drill.visible ? '' : 'filter grayscale'} 
       ${!isAdmin && !drill.visible ? 'hidden' : 'block'}`}
     >
-      {isAdmin && <EditMenu className="absolute z-10 w-16 h-16" {...drill} />}
+      {isAdmin && <EditMenu className="absolute z-10 w-16 h-16" data={drill} />}
       <Link href={`/drill-card/${drill.id}`}>
         <div className="relative w-full h-80">
           <div className="relative w-full h-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-xl">
