@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandList, CommandItem, CommandEmpty } from '@/components/ui/command';
@@ -9,6 +10,8 @@ const SearchBar = () => {
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
     
+    const router = useRouter();
+
     const inputRef = useRef<HTMLInputElement | null>(null);
     const popoverRef = useRef<HTMLDivElement | null>(null);
     
@@ -45,16 +48,21 @@ const SearchBar = () => {
         if (!searchTerm) setIsOpen(false);
     };
 
-    const handleItemSelect = () => {
+    const handleItemSelect = (drill: { id: string }) => {
         setSearchTerm('');
         setIsOpen(false);
+        router.push(`/drill-card/${drill.id}`);
     };
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-            if (popoverRef.current && !popoverRef.current.contains(event.target as Node) && inputRef.current && !inputRef.current.contains(event.target as Node)) {
+            if (
+                popoverRef.current && !popoverRef.current.contains(event.target as Node) &&
+                inputRef.current && !inputRef.current.contains(event.target as Node)
+            ) {
                 setIsOpen(false);
                 setSearchTerm('');
+                router.push(`/`);
             }
         };
 
@@ -94,20 +102,25 @@ const SearchBar = () => {
 
                 <PopoverContent ref={popoverRef} className="w-[500px] p-0">
                     <Command>
-                        <CommandEmpty>
-                            {loading ? "טוען תוצאות..." : searchTerm && results.length === 0 ? 'אין תוצאות חיפוש' : ''}
-                        </CommandEmpty>
+                    <CommandEmpty>
+                        {loading 
+                            ? "טוען תוצאות..." 
+                            : searchTerm.trim().length > 0 && results.length === 0 
+                            ? "אין תוצאות חיפוש" 
+                            : ""}
+                    </CommandEmpty>
 
                         <CommandList>
-                            {results.map((result: { id: string, name: string }) => (
+                            {results.map((drill: { id: string, training_name: string }) => (
                                 <CommandItem
-                                    key={result.id}
-                                    value={result.name}
-                                    onSelect={() => handleItemSelect(result.name)}
+                                key={drill.id}
+                                value={drill.training_name}
+                                onSelect={() => handleItemSelect(drill)}
                                 >
-                                    {result.name}
+                                    {drill.training_name}
                                 </CommandItem>
-                            ))}
+                            ))
+                            }
                         </CommandList>
                     </Command>
                 </PopoverContent>
