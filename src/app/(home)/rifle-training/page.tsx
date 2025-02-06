@@ -50,7 +50,7 @@ const RifleTrainingPage = async () => {
           </p>
         </div>
       </div>
-      <div className="min-h-screen my-4 mx-1 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:mx-12 2xl:mx-72">
+      <div className="min-h-screen my-4 mx-1 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:mx-12 2xl:mx-72">
         {drillList.map((drill) => (
           <div key={drill.id} className="flex justify-center">
             <DrillListCard {...drill} />
