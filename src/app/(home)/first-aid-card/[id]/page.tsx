@@ -54,7 +54,7 @@ const FirstAidContentPage = () => {
       {/* Back Button */}
       <div className="absolute top-6 right-6">
         <Link href="/first-aid" className="px-4 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-          → לדף עזרה ראשונה
+          → לעזרה ראשונה
         </Link>
       </div>
 

@@ -1,6 +1,5 @@
 import { DrillListCard } from '@/app/components/DrillListCard';
 import type { Drill } from '@/app/lib/types';
-import Link from 'next/link';
 
 const HandgunTrainingPage = async () => {
   // fetching data for the drills
@@ -29,20 +28,12 @@ const HandgunTrainingPage = async () => {
 
   // adding the list of drills to the page
   return (
-    <div className="min-h-screen bg-zinc-100 p-6">
-      <div className="flex justify-start mb-4">
-        <Link href="/" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-          → לדף הבית
-        </Link>
-      </div>
-
-    <div className="my-4 mx-1 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:mx-12 2xl:mx-72">
+    <div className="min-h-screen my-4 mx-1 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:mx-12 2xl:mx-72">
       {drillList.map((drill) => (
         <div key={drill.id} className="flex justify-center">
           <DrillListCard {...drill} />
         </div>
       ))}
-    </div>
     </div>
   );
 };

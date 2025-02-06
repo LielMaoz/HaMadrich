@@ -1,6 +1,5 @@
 import { FirstAidListCard } from '@/app/components/FirstAidListCard'; // Ensure correct naming convention
 import type { FirstAidContent } from '@/app/lib/types';
-import Link from 'next/link';
 
 const FirstAidContentPage = async () => {
   // fetching data for the items
@@ -25,20 +24,12 @@ const FirstAidContentPage = async () => {
 
   // adding the list of first aid to the page
   return (
-    <div className="min-h-screen bg-zinc-100 p-6">
-      <div className="flex justify-start mb-4">
-        <Link href="/" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-          → לדף הבית
-        </Link>
-      </div>
-
-    <div className="my-4 flex flex-col gap-4">
+    <div className="min-h-screen my-4 flex flex-col gap-4">
       {firstAidContentList.map((firstAid) => (
         <div key={firstAid.id} className="flex justify-center">
           <FirstAidListCard {...firstAid} />
         </div>
       ))}
-    </div>
     </div>
   );
 };

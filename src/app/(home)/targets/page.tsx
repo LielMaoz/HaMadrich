@@ -5,7 +5,6 @@ import { TargetIcon, Search } from 'lucide-react';
 import TargetCard from '@/app/components/TargetCard';
 import { Input } from "@/components/ui/input";
 import { targets } from '@/data/targets';
-import Link from 'next/link';
 
 /**
  * Targets Component
@@ -44,13 +43,6 @@ export default function Targets() {
   return (
     <div dir="rtl" className="min-h-screen p-4 bg-gradient-to-b from-zinc-100 to-zinc-200 sm:p-6 md:p-8">
       <div className="mx-auto max-w-7xl">
-         {/* Back Button */}
-         <div className="flex justify-start mb-4">
-          <Link href="/" className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition">
-            → לדף הבית
-          </Link>
-        </div>
-        
         {/* Page Header */}
         <div className="mb-12 text-center animate-fade-in">
           <div className="inline-block p-2 mb-4 rounded-full bg-primary/10">

@@ -57,7 +57,7 @@ const ProfessionalContentPage = () => {
         href='/professional-content-list'
         className="absolute top-6 right-6 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition mb-4"
       >
-        → לדף תוכן מקצועי
+        → לתוכן מקצועי
       </Link>
 
       <ProfessionalContentCard {...profCont} />
