@@ -3,57 +3,63 @@ import { Search } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandList, CommandItem, CommandEmpty } from '@/components/ui/command';
 
-const results = [
-{ value: 'אימון נשק ארוך', label: 'אימון נשק ארוך' },
-{ value: 'אימון אקדח', label: 'אימון אקדח' },
-{ value: 'תרגילים יבשים', label: 'תרגילים יבשים' },
-{ value: 'תוכן מקצועי', label: 'תוכן מקצועי' },
-{ value: 'עזרה ראשונה', label: 'עזרה ראשונה' },
-{ value: 'מטרות', label: 'מטרות' },
-];
-
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+    
     const inputRef = useRef<HTMLInputElement | null>(null);
     const popoverRef = useRef<HTMLDivElement | null>(null);
+    
+    useEffect(() => {
+        if (!searchTerm.trim()) {
+            setResults([]);
+            return;
+        }
 
-    const filteredResults = results.filter((result) =>
-        result.label.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+        setLoading(true);
+        const timeoutId = setTimeout(async () => {
+            try {
+                const response = await fetch(`/api/search?query=${encodeURIComponent(searchTerm)}`);
+                const data = await response.json();
+                setResults(data);
+            } catch (error) {
+                console.error("Error fetching search results:", error);
+            } finally {
+                setLoading(false);
+            }
+        }, 300); // Debounce of 300ms
+
+        return () => clearTimeout(timeoutId);
+    }, [searchTerm]);
 
     const handleFocus = () => {
-        setIsOpen(true); // Opens the dropdown when the input field is focused.
+        setIsOpen(true);
         setTimeout(() => {
-        if (inputRef.current) {
-            inputRef.current.focus();
-        }
+            if (inputRef.current) inputRef.current.focus();
         }, 0);
     };
 
-    // Closes the dropdown if the input is blurred and there's no search term
     const handleBlur = () => {
         if (!searchTerm) setIsOpen(false);
     };
 
-    const handleItemSelect = (value: string) => {
+    const handleItemSelect = () => {
         setSearchTerm('');
         setIsOpen(false);
     };
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
-        if (popoverRef.current && !popoverRef.current.contains(event.target as Node) && inputRef.current && !inputRef.current.contains(event.target as Node)) {
-            setIsOpen(false);
-            setSearchTerm('');
-        }
+            if (popoverRef.current && !popoverRef.current.contains(event.target as Node) && inputRef.current && !inputRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+                setSearchTerm('');
+            }
         };
 
         document.addEventListener('mousedown', handleClickOutside);
-
-        return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-        };
+        return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
     return (
@@ -89,19 +95,17 @@ const SearchBar = () => {
                 <PopoverContent ref={popoverRef} className="w-[500px] p-0">
                     <Command>
                         <CommandEmpty>
-                            {searchTerm && filteredResults.length === 0
-                                ? 'אין תוצאות חיפוש'// Displays a message when no results match the search term
-                                : ''}
+                            {loading ? "טוען תוצאות..." : searchTerm && results.length === 0 ? 'אין תוצאות חיפוש' : ''}
                         </CommandEmpty>
 
                         <CommandList>
-                            {filteredResults.map((result) => (
+                            {results.map((result: { id: string, name: string }) => (
                                 <CommandItem
-                                    key={result.value}
-                                    value={result.value}
-                                    onSelect={() => handleItemSelect(result.value)} // Selects an item when clicked
+                                    key={result.id}
+                                    value={result.name}
+                                    onSelect={() => handleItemSelect(result.name)}
                                 >
-                                    {result.label}
+                                    {result.name}
                                 </CommandItem>
                             ))}
                         </CommandList>
@@ -110,6 +114,6 @@ const SearchBar = () => {
             </Popover>
         </div>
     );
-};    
+};
 
 export default SearchBar;
