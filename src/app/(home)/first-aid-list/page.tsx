@@ -35,4 +35,4 @@ const FirstAidContent = async () => {
   );
 };
 
-export default FirstAidContentPage;
+export default FirstAidContent;
