@@ -177,7 +177,6 @@ const NavBar = () => {
   useEffect(() => {
     const checkTokenStatus = () => {
       const tokenExists = checkToken();
-      setIsLoggedIn(tokenExists);
 
       if (tokenExists) {
         if(checkTokenExpiration()){
@@ -185,21 +184,25 @@ const NavBar = () => {
         } else{
         // If the token is valid and has not expired- decode the JWT and parse the username from it
           const decoded = decodeJWT();
-          if (decoded) {
-            let username = '';
-            if (decoded.name) {
-              username = decoded.name;
-            }
-            setUserName(username);
-          }
+          setIsLoggedIn(true);
+          setUserName(decoded?.name || '');
         }
+      } else {
+        setIsLoggedIn(false);
+        setUserName('');
       }
     };
   
-    checkTokenStatus();
-    const intervalId = setInterval(checkTokenStatus, 3000000);//Check every 5 minutes
+    checkTokenStatus(); //Initial check
+    const intervalId = setInterval(checkTokenStatus, 3000000); //Periodic checks every 5 minutes
 
-    return () => clearInterval(intervalId);
+    // Listen for changes in localStorage
+    const handleStorageChange = () => checkTokenStatus();
+    window.addEventListener('storage', handleStorageChange);
+    return () => {
+      clearInterval(intervalId);
+      window.removeEventListener('storage', handleStorageChange);
+    }
   }, []);
 
   const handleLogout = () => {
@@ -213,7 +216,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className="bg-gray-900 text-white w-full p-4 flex items-center"
+      className="bg-gray-900 text-white w-full p-4 flex items-center justify-between"
       dir="rtl"
       style={{ position: 'sticky', top: 0, zIndex: 20 }}
     >
@@ -241,12 +244,9 @@ const NavBar = () => {
               />
             )}
           </div>
-
-          <div className="flex mr-auto">
-            <SearchBar />
-          </div>
-        </NavigationMenuList>
+          </NavigationMenuList>
       </NavigationMenu>
+      <SearchBar />
     </nav>
   );
 };
