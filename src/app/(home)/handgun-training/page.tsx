@@ -9,9 +9,9 @@ const HandgunTrainingPage = async () => {
 
   try {
     const response = await fetch(`${baseUrl}/api/drills`, {
-      next: { revalidate: 10 }, // Cache data for 120 seconds
+      next: { revalidate: 86400 }, // Cache data for 1 day
     });
-    console.log('Data fetched from API with cache');
+    
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }

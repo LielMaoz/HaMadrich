@@ -8,9 +8,10 @@ const RifleTrainingPage = async () => {
   let drillList;
 
   try {
-    const response = await fetch(`${baseUrl}/api/drills`);
+    const response = await fetch(`${baseUrl}/api/drills`, {
+      next: { revalidate: 86400 }, // Cache data for 1 day
+    });
 
-    console.log('Data fetched from API with NO cache');
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }

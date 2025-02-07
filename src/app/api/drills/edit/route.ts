@@ -1,6 +1,7 @@
 import pool from '@/app/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { deleteFileFromDrive, uploadFileToDrive } from './googleDrive';
+import { revalidate } from '@/utils/revalidate';
 
 async function isDrillExist(
   name: string,
@@ -72,6 +73,9 @@ export async function POST(req: NextRequest) {
     ];
     const newDrill = await pool.query(query, values);
     const drill = newDrill.rows[0];
+
+    revalidate("/api/drills");
+
     return NextResponse.json(
       { message: 'Drill created successfully', drill },
       { status: 200 }
@@ -141,6 +145,8 @@ export async function DELETE(req: NextRequest) {
           DELETE FROM trainings WHERE id = $1;`,
       [id]
     );
+
+    revalidate("/api/drills");
 
     return NextResponse.json(
       { message: 'Drill deleted successfully' },
@@ -238,6 +244,9 @@ export async function PUT(req: NextRequest) {
     if (previewURL && oldPreviewImgURL) {
       await deleteImg(oldPreviewImgURL);
     }
+
+    revalidate("/api/drills");
+
     return NextResponse.json(
       { message: 'Drill updated successfully', newDrill },
       { status: 200 }
@@ -284,6 +293,9 @@ export async function PATCH(req: NextRequest) {
       id,
     ];
     const newDrill = await pool.query(query, values);
+
+    revalidate("/api/drills");
+
     return NextResponse.json(
       { message: 'Drill updated successfully', newDrill },
       { status: 200 }
