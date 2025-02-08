@@ -1,13 +1,13 @@
 import pool from '@/app/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
-import { firstAidContent } from '@/app/lib/types';
+import { FirstAidContent } from '@/app/lib/types';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const id = searchParams.get('id');
   if (!id || id === '') {
     try {
-      const data = await pool.query<firstAidContent>('SELECT * FROM firstaid');
+      const data = await pool.query<FirstAidContent>('SELECT * FROM firstaid');
       return NextResponse.json({ data: data.rows }, { status: 200 });
     } catch (error) {
       return NextResponse.json(
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     }
   } else {
     try {
-      const data = await pool.query<firstAidContent>(
+      const data = await pool.query<FirstAidContent>(
         `SELECT * FROM firstaid WHERE id=${id}`
       );
       if (data.rowCount === 0) {

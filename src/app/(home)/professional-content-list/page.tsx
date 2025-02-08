@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { ProfessionalContentListCard } from '@/app/components/ProfessionalContentListCard';
 import type { ProfessionalContent } from '@/app/lib/types';
 import Image from 'next/image';
@@ -20,7 +21,7 @@ const ProfessionalContentPage = async () => {
   } catch (error) {
     console.error('Fetch error:', error);
 
-    return <h1>Fetch error: {error as string}</h1>;
+    return <h1>Fetch error: {String(error)}</h1>;
   }
 
   // adding the list of drills to the page

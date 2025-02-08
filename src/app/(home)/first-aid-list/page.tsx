@@ -1,6 +1,7 @@
+export const dynamic = 'force-dynamic';
 import { FirstAidListCard } from '@/app/components/FirstAidListCard';
 import type { FirstAidContent } from '@/app/lib/types';
-import FirstAidContentPage from '../first-aid/page';
+//import FirstAidContentPage from '../first-aid/page';
 
 const FirstAidContent = async () => {
   // fetching data for the items
@@ -20,7 +21,7 @@ const FirstAidContent = async () => {
   } catch (error) {
     console.error('Fetch error:', error);
 
-    return <h1>Fetch error: {error as string}</h1>;
+    return <h1>Fetch error: {String(error)}</h1>;
   }
 
   // adding the list of first aid to the page
