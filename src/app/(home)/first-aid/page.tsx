@@ -10,8 +10,8 @@ const FirstAidContentPage = async () => {
 
   try {
     const response = await fetch(`${baseUrl}/api/firstAid`);
-
-    console.log('Data fetched from API with NO cache');
+    // talk to igal about cache when admin edit options done
+    
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }

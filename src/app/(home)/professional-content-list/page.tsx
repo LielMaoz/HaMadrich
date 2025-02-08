@@ -10,8 +10,8 @@ const ProfessionalContentPage = async () => {
 
   try {
     const response = await fetch(`${baseUrl}/api/professionalContent`);
+    // talk to igal about cache when admin edit options done
 
-    console.log('Data fetched from API with NO cache');
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }

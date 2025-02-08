@@ -1,7 +1,7 @@
 import pool from '@/app/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
 import { deleteFileFromDrive, uploadFileToDrive } from './googleDrive';
-import { revalidate } from '@/utils/revalidate';
+import { revalidateTag } from 'next/cache';
 
 async function isDrillExist(
   name: string,
@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
     const newDrill = await pool.query(query, values);
     const drill = newDrill.rows[0];
 
-    revalidate("/api/drills");
+    revalidateTag('drills');
 
     return NextResponse.json(
       { message: 'Drill created successfully', drill },
@@ -146,7 +146,7 @@ export async function DELETE(req: NextRequest) {
       [id]
     );
 
-    revalidate("/api/drills");
+    revalidateTag('drills');
 
     return NextResponse.json(
       { message: 'Drill deleted successfully' },
@@ -245,7 +245,7 @@ export async function PUT(req: NextRequest) {
       await deleteImg(oldPreviewImgURL);
     }
 
-    revalidate("/api/drills");
+    revalidateTag('drills');
 
     return NextResponse.json(
       { message: 'Drill updated successfully', newDrill },
@@ -294,7 +294,7 @@ export async function PATCH(req: NextRequest) {
     ];
     const newDrill = await pool.query(query, values);
 
-    revalidate("/api/drills");
+    revalidateTag('drills');
 
     return NextResponse.json(
       { message: 'Drill updated successfully', newDrill },

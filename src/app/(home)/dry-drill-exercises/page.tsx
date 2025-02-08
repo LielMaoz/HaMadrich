@@ -10,7 +10,10 @@ const DryDrillExercises = async () => {
 
   try {
     const response = await fetch(`${baseUrl}/api/drills`, {
-      next: { revalidate: 86400 }, // Cache data for 1 day
+      next: { 
+        revalidate: 86400, // Cache data for 1 day
+        tags: ['drills']
+       }, 
     });
 
     if (!response.ok) {
