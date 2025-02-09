@@ -32,7 +32,7 @@ import LoadingSpinner from '../LoadingSpinner';
 
 // cheking the form imput
 const formSchema = z.object({
-  content_name: z.string().min(1, { message: 'יש להזין שם' }).max(255),
+  name: z.string().min(1, { message: 'יש להזין שם' }).max(255),
   description: z.string().default(''),
   preview_img: z
     .instanceof(File)
@@ -45,8 +45,16 @@ const formSchema = z.object({
       { message: 'Only JPEG or PNG files are allowed' }
     )
     .optional(),
-  link_description: z.string().default(''),
-  link: z.string().default(''),
+  link1description: z.string().default(''),
+  link1: z.string().default(''),
+  link2description: z.string().default(''),
+  link2: z.string().default(''),
+  link3description: z.string().default(''),
+  link3: z.string().default(''),
+  link4description: z.string().default(''),
+  link4: z.string().default(''),
+  link5description: z.string().default(''),
+  link5: z.string().default(''),
   visible: z.preprocess((value) => !value, z.boolean().default(true)),
 });
 
@@ -57,10 +65,18 @@ export const AddContentForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content_name: '',
+      name: '',
       description: '',
-      link_description: '',
-      link: '',
+      link1description: '',
+      link1: '',
+      link2description: '',
+      link2: '',
+      link3description: '',
+      link3: '',
+      link4description: '',
+      link4: '',
+      link5description: '',
+      link5: '',
     },
   });
 
@@ -132,7 +148,7 @@ export const AddContentForm = () => {
           >
             <FormField
               control={form.control}
-              name="content_name"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base">שם</FormLabel>
@@ -194,7 +210,7 @@ export const AddContentForm = () => {
 
             <FormField
               control={form.control}
-              name="link_description"
+              name="link1description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>תיאור קישור 1</FormLabel>
@@ -209,7 +225,7 @@ export const AddContentForm = () => {
 
             <FormField
               control={form.control}
-              name="link"
+              name="link1"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>קישור 1</FormLabel>
@@ -225,7 +241,7 @@ export const AddContentForm = () => {
             />
             <FormField
               control={form.control}
-              name="link_description"
+              name="link2description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>תיאור קישור 2</FormLabel>
@@ -240,7 +256,7 @@ export const AddContentForm = () => {
 
             <FormField
               control={form.control}
-              name="link"
+              name="link2"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>קישור 2</FormLabel>
@@ -256,7 +272,7 @@ export const AddContentForm = () => {
             />
             <FormField
               control={form.control}
-              name="link_description"
+              name="link3description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>תיאור קישור 3</FormLabel>
@@ -271,7 +287,7 @@ export const AddContentForm = () => {
 
             <FormField
               control={form.control}
-              name="link"
+              name="link3"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>קישור 3</FormLabel>
@@ -287,7 +303,7 @@ export const AddContentForm = () => {
             />
             <FormField
               control={form.control}
-              name="link_description"
+              name="link4description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>תיאור קישור 4</FormLabel>
@@ -302,7 +318,7 @@ export const AddContentForm = () => {
 
             <FormField
               control={form.control}
-              name="link"
+              name="link4"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>קישור 4</FormLabel>
@@ -318,7 +334,7 @@ export const AddContentForm = () => {
             />
             <FormField
               control={form.control}
-              name="link_description"
+              name="link5description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>תיאור קישור 5</FormLabel>
@@ -333,7 +349,7 @@ export const AddContentForm = () => {
 
             <FormField
               control={form.control}
-              name="link"
+              name="link5"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>קישור 5</FormLabel>

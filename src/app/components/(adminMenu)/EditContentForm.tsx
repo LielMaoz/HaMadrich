@@ -32,7 +32,7 @@ import LoadingSpinner from '../LoadingSpinner';
 
 // cheking the form imput
 const formSchema = z.object({
-  content_name: z.string().min(1, { message: 'יש להזין שם' }).max(255),
+  name: z.string().min(1, { message: 'יש להזין שם' }).max(255),
   description: z.string().default(''),
   preview_img: z
     .instanceof(File)
@@ -65,7 +65,7 @@ export const EditContentForm = ({ ...content }: ProfessionalContent) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      content_name: content.name,
+      name: content.name,
       description: content.description,
       link1description: content.link1description || '',
       link1: content.link1 || '',
@@ -176,7 +176,7 @@ export const EditContentForm = ({ ...content }: ProfessionalContent) => {
           </AlertDialogTitle>
 
           <AlertDialogDescription className="text-center">
-            אנא שנה את כל הפרטים הבאים למקצה הזה
+            באפשרותך לשנות את כל הפרטים של התוכן
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -188,7 +188,7 @@ export const EditContentForm = ({ ...content }: ProfessionalContent) => {
           >
             <FormField
               control={form.control}
-              name="content_name"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-base">שם</FormLabel>

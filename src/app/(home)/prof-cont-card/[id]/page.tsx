@@ -13,7 +13,7 @@ const ProfessionalContentPage = () => {
     id: 11111,
     name: '',
     description: '',
-    prvImg: '/',
+    prvimg: '/',
     link1description: '/',
     link1: '/',
     link2description: '/',
@@ -52,9 +52,9 @@ const ProfessionalContentPage = () => {
   }, [id]);
 
   return (
-  <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-100 p-6 relative">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-zinc-100 p-6 relative">
       <Link
-        href='/professional-content-list'
+        href="/professional-content-list"
         className="absolute top-6 right-6 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition mb-4"
       >
         → לתוכן מקצועי

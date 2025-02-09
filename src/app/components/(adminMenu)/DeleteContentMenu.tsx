@@ -23,7 +23,7 @@ export const DeleteContentMenu = ({ id }: { id: number }) => {
 
     try {
       const token = localStorage.getItem('jwtToken');
-      const res = await fetch('/api/ProfessionalContent/edit', {
+      const res = await fetch('/api/professionalContent/edit', {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
