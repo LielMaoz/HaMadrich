@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -7,7 +7,7 @@ import { Command, CommandList, CommandItem, CommandEmpty } from '@/components/ui
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
-    const [results, setResults] = useState([]);
+    const [drills, setDrills] = useState([]);
     const [loading, setLoading] = useState(false);
     
     const router = useRouter();
@@ -15,37 +15,35 @@ const SearchBar = () => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const popoverRef = useRef<HTMLDivElement | null>(null);
     
+    // Preloading all exercises
     useEffect(() => {
-        if (!searchTerm.trim()) {
-            setResults([]);
-            return;
-        }
-
-        setLoading(true);
-        const timeoutId = setTimeout(async () => {
+        const fetchDrills = async () => {
+            setLoading(true);
             try {
-                const response = await fetch(`/api/search?query=${encodeURIComponent(searchTerm)}`);
+                const response = await fetch('/api/search');
                 const data = await response.json();
-                setResults(data);
+                console.log("Data from API:", data);
+                setDrills(data);
             } catch (error) {
-                console.error("Error fetching search results:", error);
+                console.error("Error fetching drills:", error);
             } finally {
                 setLoading(false);
             }
-        }, 300); // Debounce of 300ms
+        };
+        fetchDrills();
+    }, []);
 
-        return () => clearTimeout(timeoutId);
-    }, [searchTerm]);
+    // Local search on the data already loaded
+    const filteredResults = useMemo(() => {
+        if (!searchTerm.trim()) return [];
+        return drills.filter((drill: { training_name: string }) =>
+            drill.training_name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [searchTerm, drills]);
 
     const handleFocus = () => {
         setIsOpen(true);
-        setTimeout(() => {
-            if (inputRef.current) inputRef.current.focus();
-        }, 0);
-    };
-
-    const handleBlur = () => {
-        if (!searchTerm) setIsOpen(false);
+        setTimeout(() => inputRef.current?.focus(), 0);
     };
 
     const handleItemSelect = (drill: { id: string }) => {
@@ -94,7 +92,6 @@ const SearchBar = () => {
                             placeholder="חיפוש..."
                             dir="rtl"
                             onFocus={handleFocus}
-                            onBlur={handleBlur}
                             className="px-4 py-2 bg-gray-700 text-white rounded-full w-60 focus:outline-none"
                         />
                     </div>
@@ -105,13 +102,13 @@ const SearchBar = () => {
                     <CommandEmpty>
                         {loading 
                             ? "טוען תוצאות..." 
-                            : searchTerm.trim().length > 0 && results.length === 0 
+                            : searchTerm.trim().length > 0 && filteredResults.length === 0 
                             ? "אין תוצאות חיפוש" 
                             : ""}
                     </CommandEmpty>
 
                         <CommandList>
-                            {results.map((drill: { id: string, training_name: string }) => (
+                            {filteredResults.map((drill: { id: string, training_name: string }) => (
                                 <CommandItem
                                 key={drill.id}
                                 value={drill.training_name}

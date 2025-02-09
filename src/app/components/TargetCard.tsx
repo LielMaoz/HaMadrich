@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import type { TargetProps } from '@/types/target';
+import type { TargetProps } from '@/data/targets';
 
 /**
  * TargetCard Component
@@ -26,7 +26,7 @@ interface TargetCardProps {
 
 export default function TargetCard({ target }: TargetCardProps) {
   const [isDownloading, setIsDownloading] = useState(false); // Track the download status
-  const [imageError, setImageError] = useState(false); // Handle potential image errors
+  //const [imageError, setImageError] = useState(false); // Handle potential image errors
 
   /**
    * handleDownload - Handles downloading the target image.

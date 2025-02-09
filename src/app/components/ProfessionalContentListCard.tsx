@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { EditMenu } from './(adminMenu)/EditMenu'; // need to add on line 23-24
+//import { EditMenu } from './(adminMenu)/EditMenu'; // need to add on line 23-24
 import type { ProfessionalContent } from '@/app/lib/types';
 import { useState, useEffect } from 'react';
 import { checkAdmin } from '@/utils/adminCheck';
