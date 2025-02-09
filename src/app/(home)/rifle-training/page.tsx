@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import { DrillListCard } from '@/app/components/DrillListCard';
 import type { Drill } from '@/app/lib/types';
 import Image from 'next/image';
@@ -5,12 +6,16 @@ import Image from 'next/image';
 const RifleTrainingPage = async () => {
   // fetching data for the drills
   const baseUrl = 'http://localhost:3000';
-  let drillList;
+  let drillList: Drill[];
 
   try {
-    const response = await fetch(`${baseUrl}/api/drills`);
+    const response = await fetch(`${baseUrl}/api/drills`, {
+      next: { 
+        revalidate: 86400, // Cache data for 1 day
+        tags: ['drills']
+       }, 
+    });
 
-    console.log('Data fetched from API with NO cache');
     if (!response.ok) {
       throw new Error(`Error: ${response.status}`);
     }
@@ -23,7 +28,7 @@ const RifleTrainingPage = async () => {
   } catch (error) {
     console.error('Fetch error:', error);
 
-    return <h1>Fetch error: {error as string}</h1>;
+    return <h1>Fetch error: {String(error)}</h1>;
   }
 
   // adding the list of drills to the page
