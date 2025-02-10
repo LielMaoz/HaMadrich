@@ -5,12 +5,13 @@ import Link from 'next/link';
 import { checkToken, checkTokenExpiration, decodeJWT } from '@/utils/jwtDecoder';
 import { googleLogout } from '@react-oauth/google';
 import SearchBar from './SearchBar';
+import Image from 'next/image';
 
 import {
   NavigationMenu,
+  NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-  NavigationMenuList,
 } from '@/components/ui/navigation-menu';
 
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
@@ -200,16 +201,13 @@ const NavBar = () => {
       dir="rtl"
       style={{ position: 'sticky', top: 0, zIndex: 20 }}
     >
-      <NavigationMenu>
-        <NavigationMenuList
-          className="flex justify-between items-center w-full"
+      <NavigationMenu
+          className="items-center justify-start w-auto"
           dir="rtl"
         >
-          <div className="ml-2">
+          <NavigationMenuList className="flex items-center space-x-4">
             <HomePage />
-          </div>
-
-          <div className="flex space-x-2 space-x-reverse">
+  
             {!isLoggedIn ? (
               <>
                 <SignIn />
@@ -223,12 +221,21 @@ const NavBar = () => {
                 handleLogout={handleLogout}
               />
             )}
-          </div>
-        </NavigationMenuList>
-      </NavigationMenu>
-      <div className="flex mr-auto">
-        <SearchBar />
-      </div>
+          </NavigationMenuList>
+        </NavigationMenu>
+
+          <NavigationMenu className="flex items-center justify-start w-auto space-x-4">
+            <Image
+            src="/images/hamadrich-logo.png"
+            alt="Logo"
+            width={110}
+            height={110}
+            quality={100}
+            className="object-cover"
+            />
+            <SearchBar />
+          </NavigationMenu>
+
     </nav>
   );
 };
