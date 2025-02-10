@@ -224,7 +224,6 @@ export async function PATCH(req: NextRequest) {
     const updatedContent = await req.json();
     const name = updatedContent.name;
     const id = updatedContent.id;
-    console.log(updatedContent);
     await doesContentExist(name, id);
     const query = `
           update professionalcontent set 
