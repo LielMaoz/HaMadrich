@@ -25,8 +25,7 @@
 
                     // Removing duplicates by exercise name
                     const uniqueDrills = Array.from(
-                        new Map(data.map(item => [item.training_name, item])).values()
-                    );
+                        new Map(data.map(item => [item.training_name, item])).values());
                     setDrills(uniqueDrills);
                 } catch (error) {
                     console.error("Error fetching drills:", error);
