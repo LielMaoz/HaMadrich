@@ -28,32 +28,36 @@ const SearchBar = () => {
     const popoverRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchData = async () => { 
             setLoading(true);
             try {
                 const response = await fetch('/api/search');
                 const data = await response.json();
+
+                console.log("Fetched Data:", data);
 
                 // Saving unique results by ID
                 const uniqueResults = new Map<string, SearchItem>();
 
                 const formattedData: SearchItem[] = [
                     ...data.drills.map((item: { id: string; training_name: string; weapon_type: string; drill_type: string }) => ({
-                        id: item.id,
-                        name: `${item.training_name} (${item.drill_type === 'חי' ? 'חי' : 'יבש'}, ${item.weapon_type === 'נשק ארוך' ? 'נשק ארוך' : 'אקדח'})`,
-                        category: 'drills'
+                      id: item.id,
+                      name: `${item.training_name} (${item.drill_type === 'חי' ? 'חי' : 'יבש'}, ${item.weapon_type === 'נשק ארוך' ? 'נשק ארוך' : 'אקדח'})`,
+                      category: 'drills'
                     })),
                     ...data.firstAid.map((item: { id: string; name: string }) => ({
-                        id: item.id,
-                        name: item.name,
-                        category: 'firstAid'
+                      id: item.id,
+                      name: item.name,
+                      category: 'firstAid'
                     })),
                     ...data.professionalContent.map((item: { id: string; name: string }) => ({
-                        id: item.id,
-                        name: item.name,
-                        category: 'professionalContent'
+                      id: item.id,
+                      name: item.name,
+                      category: 'professionalContent'
                     }))
-                ];
+                  ];
+                  
+                  console.log("Formatted Data:", formattedData);
 
                 formattedData.forEach(item => {
                     if (!uniqueResults.has(item.id)) {
@@ -76,9 +80,24 @@ const SearchBar = () => {
         if (!searchTerm.trim()) return [];
 
         return searchData
-            .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
-            .sort((a, b) => a.name.localeCompare(b.name, 'he'));
-    }, [searchTerm, searchData]);
+        .filter(item => 
+            item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.category.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+          .sort((a, b) => a.name.localeCompare(b.name, 'he'));
+        }, [searchTerm, searchData]);
+
+        // רק הדפסות
+        useEffect(() => {
+            if (filteredResults.length > 0) {
+                ['drills', 'professionalContent', 'firstAid'].forEach(category => {
+                    const categoryResults = filteredResults.filter(item => item.category === category);
+                    console.log(`Results for ${category}:`, categoryResults);
+                });
+            }
+        }, [filteredResults]);
+    
+        console.log("Filtered Results:", filteredResults);
 
     const handleFocus = () => {
         setIsExpanded(true);
