@@ -225,14 +225,16 @@ const NavBar = () => {
         </NavigationMenu>
 
           <NavigationMenu className="flex items-center justify-start w-auto space-x-2 sm:space-x-4">
-            <Image
-            src="/images/hamadrich-logo.png"
-            alt="Logo"
-            width={110}
-            height={110}
-            quality={100}
-            className="hidden sm:block object-cover"
-            />
+            <Link href="/" passHref>
+              <Image
+              src="/images/hamadrich-logo.png"
+              alt="Logo"
+              width={110}
+              height={110}
+              quality={100}
+              className="hidden sm:block object-cover"
+              />
+            </Link>
             <SearchBar isLoggedIn={isLoggedIn}/>
           </NavigationMenu>
 
