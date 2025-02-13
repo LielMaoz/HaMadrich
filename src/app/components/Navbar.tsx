@@ -205,7 +205,7 @@ const NavBar = () => {
           className="items-center justify-start w-auto"
           dir="rtl"
         >
-          <NavigationMenuList className="flex items-center space-x-4">
+          <NavigationMenuList className="flex items-center space-x-2 sm:space-x-4">
             <HomePage />
   
             {!isLoggedIn ? (
@@ -224,16 +224,16 @@ const NavBar = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-          <NavigationMenu className="flex items-center justify-start w-auto space-x-4">
+          <NavigationMenu className="flex items-center justify-start w-auto space-x-2 sm:space-x-4">
             <Image
             src="/images/hamadrich-logo.png"
             alt="Logo"
             width={110}
             height={110}
             quality={100}
-            className="object-cover"
+            className="hidden sm:block object-cover"
             />
-            <SearchBar />
+            <SearchBar/>
           </NavigationMenu>
 
     </nav>
