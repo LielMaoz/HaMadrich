@@ -1,7 +1,7 @@
 
-# HaMadrih: Shooting Training Management System
+# HaMadrich: Shooting Training Management System
 
-**HaMadrih** is a state-of-the-art platform designed to enhance the training experience for soldiers, security forces, and commanders. It provides access to professional resources, customizable shooting ranges, medical training materials, and skill development tools, all within a centralized and intuitive system.
+**HaMadrich** is a state-of-the-art platform designed to enhance the training experience for soldiers, security forces, and commanders. It provides access to professional resources, customizable shooting ranges, medical training materials, and skill development tools, all within a centralized and intuitive system.
 
 ---
 
@@ -15,25 +15,24 @@
 
 ### Goals:
 1. **Improve User Experience**:
-   - Simplified interface for building and managing shooting training schedules.
-   - Features such as weather-based training adjustments using real-time data.
+   - Simplified interface for practicing and managing shooting training.
 2. **Centralized Professional Content**:
    - Easy access to content tailored to specific weapons, optics, and first aid requirements.
-   - Curated training videos for skill enhancement.
+   - Professional contents for skill enhancement.
 
 ---
 
 ## 🌟 Key Features
 
 ### User Capabilities
-- **Access Professional Content**: Browse curated shooting and medical training materials.
-- **Target Downloads**: Explore and download various target templates for shooting practice.
+- **Access Professional Content**: Browse professional contents and medical training materials.
+- **Target Downloads**: Download various target templates for shooting practice.
 - **User-Friendly Registration**: Register easily with email or Google authentication.
 
 ### Admin Capabilities
 - **Content Management**:
-  - Add, edit, or remove shooting ranges and training materials.
-  - Create and manage customized shooting range layouts.
+  - Add, edit, or remove shooting drills.
+  - Create and manage customized shooting drills.
 - **Role-Based Access**: Admins have advanced privileges for system management.
 
 ### Security:
@@ -43,8 +42,8 @@
 ### Integration Highlights
 - **Google Drive**: Store and manage high-quality visuals and project assets.
 - **Google API**: Seamless integration for various services and functionalities.
-- **PostgreSQL Database**: Efficiently store and organize data for users, training topics, and targets.
-- **Modern Design**: Built with Tailwind CSS for a clean and responsive user interface.
+- **PostgreSQL Database**: Efficiently store and organize data for users, training topics, professional contents.
+- **Modern Design**: Built with Tailwind CSS and shadcn.ui for a clean and responsive user interface.
 - **Cutting-Edge Frameworks**: Developed with Next.js and React for dynamic and interactive experiences.
 
 
@@ -75,37 +74,15 @@
 ## 🔑 User Roles
 
 1. **Regular User**:
-   - Register and log in to access training materials.
-   - Manage personal training schedules and content.
-   - Watch curated professional videos and download practice targets.
-2. **Administrator**:
-   - Full system control, including user and content management.
-   - Moderate feedback and ensure the quality of training materials.
-
----
-
-## 📂 Implementation Details
-
-### Database Schema
-- **Users**:
-  - Attributes: `id`, `name`, `email`, `password`, `role` (user/admin).
-- **Shooting Ranges**:
-  - Attributes: `id`, `title`, `description`, `customized_options`.
-- **Targets**:
-  - Attributes: `id`, `title`, `file_url`.
-- **Medical Content**:
-  - Attributes: `id`, `title`, `description`, `resources`.
-
-### API Endpoints
-- **User Management**:
-  - `POST /api/register`: Register a new user.
-  - `POST /api/login`: Authenticate existing users.
-- **Shooting Ranges**:
-  - `GET /api/ranges`: Fetch available shooting ranges.
-  - `POST /api/ranges`: Add new shooting ranges (admin only).
-- **Targets**:
-  - `GET /api/targets`: Retrieve downloadable target templates.
-
+- Can register and log in to the system, view professional content to improve knowledge, access medical content.
+- Can download any target from the target database to choose from according to the shooting range.
+- Access to the shooting range database according to the type of weapon and type of exercise.
+2. **System Administrator**:
+- Can register and log in to the system, view professional content to improve knowledge, access medical content.
+- Can download any target from the target database to choose from according to the shooting drills.
+- Access to the shooting range database according to the type of weapon and type of exercise.
+- Ability to create custom shooting drills.
+- Can delete and add shooting drills, hide them.
 ---
 
 ## 🚀 Getting Started
@@ -121,7 +98,7 @@
    ```
 2. Navigate to the project directory:
    ```bash
-   cd hamadrih-app
+   cd hamadrich-app
    ```
 3. Install dependencies:
    ```bash
@@ -147,8 +124,8 @@
 
 ### Deployment Steps
 1. **Prepare the Production Environment**:
-   - Choose a hosting platform such as [Vercel](https://vercel.com/) (optimized for Next.js) or [Heroku](https://www.heroku.com/).
-   - Ensure the PostgreSQL database is hosted on a production-ready service like AWS RDS or Google Cloud SQL.
+   - Choose a hosting platform such as [Vercel](https://vercel.com/) (optimized for Next.js).
+   - Ensure the PostgreSQL database is hosted on a production-ready service.
 
 2. **Configure Environment Variables**:
    - Add your production database credentials, Google API keys, and other sensitive configurations to the hosting platform.
@@ -183,7 +160,7 @@
 
 ## 🤝 Contributing
 
-We welcome contributions to improve **HaMadrih**! To get started:
+We welcome contributions to improve **HaMadrich**! To get started:
 1. Fork the repository.
 2. Create a new branch:
    ```bash
@@ -201,12 +178,6 @@ We welcome contributions to improve **HaMadrih**! To get started:
 
 ---
 
-## 📜 License
-
-This project is licensed under the **MIT License**. You are free to use, modify, and distribute the code with proper attribution.
-
----
-
 ## 📣 Support
 
 For inquiries, feedback, or support, please contact the development team:
@@ -217,8 +188,6 @@ For inquiries, feedback, or support, please contact the development team:
 - **Ilay Arugi**
 - **Ayala Or**
 
-Alternatively, you can reach us via email at **support@hamadrih.com**.
-
 ---
 
-We’re excited to see **HaMadrih** revolutionize shooting training and skill development!
+We’re excited to see **HaMadrich** revolutionize shooting training and skill development!
