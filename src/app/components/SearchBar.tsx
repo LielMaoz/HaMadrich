@@ -104,7 +104,6 @@
         const handleFocus = () => {
             if (!isLoggedIn) {
                 setError('עליך להתחבר לפני שתוכל לבצע חיפוש');
-                setIsExpanded(false); // Make sure search doesn't expand if not logged in
             }
             setIsExpanded(true);
             setIsOpen(true);
@@ -141,12 +140,6 @@
 
         return (
             <div className="relative z-10">
-                {error && (
-                <div ref={errorRef} className="absolute top-[100%] left-0 right-0 bg-red-500 text-white text-center py-2 rounded-lg shadow-lg z-10">
-                    {error}
-                </div>
-            )}
-
                 <Popover open={isOpen}>
                     <PopoverTrigger asChild>
                         <div 
@@ -173,13 +166,14 @@
                     </PopoverTrigger>
 
                     <PopoverContent ref={popoverRef} className="w-full sm:w-[500px] p-0">
-                    {isLoggedIn && (
                         <Command>
                             <CommandEmpty>
-                                {loading 
-                                    ? "טוען תוצאות..." 
+                                {!isLoggedIn 
+                                    ? "עליך להתחבר לפני שתוכל לבצע חיפוש"  
                                     : searchTerm.trim().length > 0 && filteredResults.length === 0 
                                     ? "אין תוצאות חיפוש" 
+                                    : loading 
+                                    ? "טוען תוצאות..."
                                     : ""}
                             </CommandEmpty>
 
@@ -210,7 +204,6 @@
                                 })}
                             </CommandList>
                         </Command>
-                         )}
                     </PopoverContent>
                 </Popover>
             </div>
