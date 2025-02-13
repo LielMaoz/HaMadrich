@@ -233,7 +233,7 @@ const NavBar = () => {
             quality={100}
             className="hidden sm:block object-cover"
             />
-            <SearchBar/>
+            <SearchBar isLoggedIn={isLoggedIn}/>
           </NavigationMenu>
 
     </nav>

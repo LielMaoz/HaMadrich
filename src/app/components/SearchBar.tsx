@@ -16,16 +16,18 @@
         professionalContent: '/prof-cont-card/',
     };
 
-    const SearchBar = () => {
+    const SearchBar = ({ isLoggedIn }) => {
         const [searchTerm, setSearchTerm] = useState('');
         const [isOpen, setIsOpen] = useState(false);
         const [isExpanded, setIsExpanded] = useState(false);
         const [searchData, setSearchData] = useState<SearchItem[]>([]);
         const [loading, setLoading] = useState(false);
+        const [error, setError] = useState<string | null>(null);
 
         const router = useRouter();
         const inputRef = useRef<HTMLInputElement | null>(null);
         const popoverRef = useRef<HTMLDivElement | null>(null);
+        const errorRef = useRef<HTMLDivElement | null>(null);
 
         useEffect(() => {
             const fetchData = async () => { 
@@ -100,6 +102,10 @@
             console.log("Filtered Results:", filteredResults);
 
         const handleFocus = () => {
+            if (!isLoggedIn) {
+                setError('עליך להתחבר לפני שתוכל לבצע חיפוש');
+                setIsExpanded(false); // Make sure search doesn't expand if not logged in
+            }
             setIsExpanded(true);
             setIsOpen(true);
             setTimeout(() => inputRef.current?.focus(), 0);
@@ -122,6 +128,11 @@
                     setIsOpen(false);
                     setSearchTerm('');
                 }
+
+                // Close the error message when clicking outside
+                if (errorRef.current && !errorRef.current.contains(event.target as Node)) {
+                    setError(null);
+                }
             };
 
             document.addEventListener('mousedown', handleClickOutside);
@@ -130,16 +141,11 @@
 
         return (
             <div className="relative z-10">
-                {isExpanded && (
-                    <div
-                        className="fixed inset-0 bg-black bg-opacity-50 z-0"
-                        onClick={() => {
-                            setIsExpanded(false);
-                            setIsOpen(false);
-                            setSearchTerm('');
-                        }}
-                    />
-                )}
+                {error && (
+                <div ref={errorRef} className="absolute top-[100%] left-0 right-0 bg-red-500 text-white text-center py-2 rounded-lg shadow-lg z-10">
+                    {error}
+                </div>
+            )}
 
                 <Popover open={isOpen}>
                     <PopoverTrigger asChild>
@@ -160,12 +166,14 @@
                                     placeholder="חיפוש..."
                                     dir="rtl"
                                     className="px-4 py-2 bg-gray-700 text-white rounded-full w-full focus:outline-none"
+                                    disabled={!isLoggedIn}
                                 />
                             )}
                         </div>
                     </PopoverTrigger>
 
                     <PopoverContent ref={popoverRef} className="w-full sm:w-[500px] p-0">
+                    {isLoggedIn && (
                         <Command>
                             <CommandEmpty>
                                 {loading 
@@ -202,6 +210,7 @@
                                 })}
                             </CommandList>
                         </Command>
+                         )}
                     </PopoverContent>
                 </Popover>
             </div>
