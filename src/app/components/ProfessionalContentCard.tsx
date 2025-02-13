@@ -14,23 +14,23 @@ export function ProfessionalContentCard({ ...profCont }: ProfessionalContent) {
   const videos = [
     {
       url: extractYouTubeId(profCont.link1),
-      description: profCont.link1Description,
+      description: profCont.link1description,
     },
     {
       url: extractYouTubeId(profCont.link2),
-      description: profCont.link2Description,
+      description: profCont.link2description,
     },
     {
       url: extractYouTubeId(profCont.link3),
-      description: profCont.link3Description,
+      description: profCont.link3description,
     },
     {
       url: extractYouTubeId(profCont.link4),
-      description: profCont.link4Description,
+      description: profCont.link4description,
     },
     {
       url: extractYouTubeId(profCont.link5),
-      description: profCont.link5Description,
+      description: profCont.link5description,
     },
   ].filter((video) => video.url !== null); // Filter out videos with null URLs
 
@@ -43,7 +43,8 @@ export function ProfessionalContentCard({ ...profCont }: ProfessionalContent) {
       </h1>
       <p
         className="text-lg text-gray-700 mb-12 text-center"
-        style={{ whiteSpace: 'pre-line' }}>
+        style={{ whiteSpace: 'pre-line' }}
+      >
         {profCont.description}
       </p>
 

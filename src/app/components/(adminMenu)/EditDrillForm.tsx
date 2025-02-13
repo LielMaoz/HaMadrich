@@ -24,20 +24,18 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Switch } from "@/components/ui/switch"
-import { useForm } from "react-hook-form"
-import {
-  zodResolver
-} from "@hookform/resolvers/zod"
-import * as z from "zod"
-import { Button } from "@/components/ui/button"
-import { type Drill } from "@/app/lib/types"
-import { useState } from "react"
-import LoadingSpinner from "../LoadingSpinner"
+  SelectValue,
+} from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { type Drill } from '@/app/lib/types';
+import { useState } from 'react';
+import LoadingSpinner from '../LoadingSpinner';
 
 // cheking the form imput
 const formSchema = z.object({
@@ -66,29 +64,37 @@ const formSchema = z.object({
     (value) => (typeof value === 'string' ? parseFloat(value) : value),
     z.number().nonnegative().default(0)
   ),
-  description: z.string().default(""),
-  range_img: z.instanceof(File, { message: "יש לעלות תמונה" }).refine(
-    (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
-    { message: "File size must be 4MB or less" }
-  ).refine(
-    (file) => ["image/jpeg", "image/png"].includes(file.type), // Only JPEG or PNG
-    { message: "Only JPEG or PNG files are allowed" }
-  ).optional(),
-  preview_img: z.instanceof(File).refine(
-    (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
-    { message: "File size must be 4MB or less" }
-  ).refine(
-    (file) => ["image/jpeg", "image/png"].includes(file.type), // Only JPEG or PNG
-    { message: "Only JPEG or PNG files are allowed" }
-  ).optional(),
-  visible: z.preprocess((value) => !value , z.boolean().default(true))
+  description: z.string().default(''),
+  range_img: z
+    .instanceof(File, { message: 'יש לעלות תמונה' })
+    .refine(
+      (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
+      { message: 'File size must be 4MB or less' }
+    )
+    .refine(
+      (file) => ['image/jpeg', 'image/png'].includes(file.type), // Only JPEG or PNG
+      { message: 'Only JPEG or PNG files are allowed' }
+    )
+    .optional(),
+  preview_img: z
+    .instanceof(File)
+    .refine(
+      (file) => file.size <= 4 * 1024 * 1024, // Max size: 4MB
+      { message: 'File size must be 4MB or less' }
+    )
+    .refine(
+      (file) => ['image/jpeg', 'image/png'].includes(file.type), // Only JPEG or PNG
+      { message: 'Only JPEG or PNG files are allowed' }
+    )
+    .optional(),
+  visible: z.preprocess((value) => !value, z.boolean().default(true)),
 });
 
-export const EditDrillForm = ( {...drill}: Drill) => {
-  const [msg, setMsg] = useState<string>("");
+export const EditDrillForm = ({ ...drill }: Drill) => {
+  const [msg, setMsg] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const form = useForm < z.infer < typeof formSchema >> ({
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       training_name: drill.training_name,
@@ -104,7 +110,7 @@ export const EditDrillForm = ( {...drill}: Drill) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    setMsg("");
+    setMsg('');
     setLoading(true);
 
     const valuesWithId = {
@@ -147,13 +153,13 @@ export const EditDrillForm = ( {...drill}: Drill) => {
           });
           if (res.ok) {
             // telling user his action is succsesful and refreshing screen after a delay
-            setMsg("הפעולה בוצעה");
-            await new Promise((res)=> setTimeout(res, 2000));
+            setMsg('הפעולה בוצעה');
+            await new Promise((res) => setTimeout(res, 2000));
             window.location.reload();
           } else {
             // telling user what is wrong
             const { error } = await res.json();
-            setMsg(error || "הפעולה נכשלה");
+            setMsg(error || 'הפעולה נכשלה');
           }
         } catch (error) {
           console.log(error);
@@ -173,13 +179,13 @@ export const EditDrillForm = ( {...drill}: Drill) => {
         });
         if (res.ok) {
           // telling user his action is succsesful and refreshing screen after a delay
-          setMsg("הפעולה בוצעה");
-          await new Promise((res)=> setTimeout(res, 2000));
+          setMsg('הפעולה בוצעה');
+          await new Promise((res) => setTimeout(res, 2000));
           window.location.reload();
         } else {
           // telling user what is wrong
           const { error } = await res.json();
-          setMsg(error || "הפעולה נכשלה");
+          setMsg(error || 'הפעולה נכשלה');
         }
       } catch (error) {
         console.log(error);
@@ -202,7 +208,7 @@ export const EditDrillForm = ( {...drill}: Drill) => {
           </AlertDialogTitle>
 
           <AlertDialogDescription className="text-center">
-            ענה שנה את כל הפרטים הבאים למקצה הזה
+            אנא שנה את כל הפרטים הבאים למקצה הזה
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -303,7 +309,9 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                           <SelectItem value="איפוסון">איפוסון</SelectItem>
                           <SelectItem value="הישגית">הישגית</SelectItem>
                           <SelectItem value="גוף/פלאח">גוף/פלאח</SelectItem>
-                          <SelectItem value="מטרה בתנועה">מטרה בתנועה</SelectItem>
+                          <SelectItem value="מטרה בתנועה">
+                            מטרה בתנועה
+                          </SelectItem>
                           <SelectItem value="רחפן">רחפן</SelectItem>
                         </SelectContent>
                       </Select>
@@ -324,12 +332,13 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                     <FormItem>
                       <FormLabel>זמן לירי</FormLabel>
                       <FormControl>
-                        <Input 
-                        placeholder="0"
-                        min="0"
-                        step="1"
-                        type="number"
-                        {...field} />
+                        <Input
+                          placeholder="0"
+                          min="0"
+                          step="1"
+                          type="number"
+                          {...field}
+                        />
                       </FormControl>
                       <FormDescription>הזמן הוא בשניות</FormDescription>
                       <FormMessage />
@@ -346,12 +355,13 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                     <FormItem>
                       <FormLabel>תחמושת</FormLabel>
                       <FormControl>
-                        <Input 
-                        placeholder="0"
-                        min="0"
-                        step="1"
-                        type="number"
-                        {...field} />
+                        <Input
+                          placeholder="0"
+                          min="0"
+                          step="1"
+                          type="number"
+                          {...field}
+                        />
                       </FormControl>
                       <FormDescription>התחמושת היא בכדורים</FormDescription>
                       <FormMessage />
@@ -368,12 +378,13 @@ export const EditDrillForm = ( {...drill}: Drill) => {
                     <FormItem>
                       <FormLabel>מרחק למטרה</FormLabel>
                       <FormControl>
-                        <Input 
-                        placeholder="0"
-                        min="0"
-                        step="1"
-                        type="number"
-                        {...field} />
+                        <Input
+                          placeholder="0"
+                          min="0"
+                          step="1"
+                          type="number"
+                          {...field}
+                        />
                       </FormControl>
                       <FormDescription>המרחק הוא במטרים</FormDescription>
                       <FormMessage />
@@ -477,12 +488,18 @@ export const EditDrillForm = ( {...drill}: Drill) => {
         </Form>
 
         <AlertDialogFooter className="gap-2">
-              <p className={`w-full flex justify-center items-center ${msg === "הפעולה בוצעה" ? "text-green-700" : "text-red-500"}`}>
-                {msg}
-              </p>
-              <AlertDialogCancel>ביטול</AlertDialogCancel>
-              <Button type="submit" form="myForm" disabled={loading}>{loading ? <LoadingSpinner /> : 'המשך'}</Button>
-            </AlertDialogFooter>
+          <p
+            className={`w-full flex justify-center items-center ${
+              msg === 'הפעולה בוצעה' ? 'text-green-700' : 'text-red-500'
+            }`}
+          >
+            {msg}
+          </p>
+          <AlertDialogCancel>ביטול</AlertDialogCancel>
+          <Button type="submit" form="myForm" disabled={loading}>
+            {loading ? <LoadingSpinner /> : 'המשך'}
+          </Button>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
