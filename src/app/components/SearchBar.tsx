@@ -16,18 +16,16 @@
         professionalContent: '/prof-cont-card/',
     };
 
-    const SearchBar = ({ isLoggedIn }) => {
+    const SearchBar = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         const [searchTerm, setSearchTerm] = useState('');
         const [isOpen, setIsOpen] = useState(false);
         const [isExpanded, setIsExpanded] = useState(false);
         const [searchData, setSearchData] = useState<SearchItem[]>([]);
         const [loading, setLoading] = useState(false);
-        const [error, setError] = useState<string | null>(null);
 
         const router = useRouter();
         const inputRef = useRef<HTMLInputElement | null>(null);
         const popoverRef = useRef<HTMLDivElement | null>(null);
-        const errorRef = useRef<HTMLDivElement | null>(null);
 
         useEffect(() => {
             const fetchData = async () => { 
@@ -35,9 +33,6 @@
                 try {
                     const response = await fetch('/api/search');
                     const data = await response.json();
-
-                    console.log("Fetched Data:", data);
-
                     // Saving unique results by ID
                     const uniqueResults = new Map<string, SearchItem>();
 
@@ -58,8 +53,6 @@
                         category: 'professionalContent'
                         }))
                     ];
-                    
-                    console.log("Formatted Data:", formattedData);
 
                     formattedData.forEach(item => {
                         if (!uniqueResults.has(item.id)) {
@@ -89,22 +82,7 @@
             .sort((a, b) => a.name.localeCompare(b.name, 'he'));
             }, [searchTerm, searchData]);
 
-            // רק הדפסות
-            useEffect(() => {
-                if (filteredResults.length > 0) {
-                    ['drills', 'professionalContent', 'firstAid'].forEach(category => {
-                        const categoryResults = filteredResults.filter(item => item.category === category);
-                        console.log(`Results for ${category}:`, categoryResults);
-                    });
-                }
-            }, [filteredResults]);
-        
-            console.log("Filtered Results:", filteredResults);
-
         const handleFocus = () => {
-            if (!isLoggedIn) {
-                setError('עליך להתחבר לפני שתוכל לבצע חיפוש');
-            }
             setIsExpanded(true);
             setIsOpen(true);
             setTimeout(() => inputRef.current?.focus(), 0);
@@ -126,11 +104,6 @@
                     setIsExpanded(false);
                     setIsOpen(false);
                     setSearchTerm('');
-                }
-
-                // Close the error message when clicking outside
-                if (errorRef.current && !errorRef.current.contains(event.target as Node)) {
-                    setError(null);
                 }
             };
 
