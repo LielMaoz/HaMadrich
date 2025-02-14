@@ -33,6 +33,7 @@ const NavigationMenuList = React.forwardRef<
       'group flex flex-1 list-none items-center justify-center space-x-1',
       className
     )}
+    dir="rtl"
     {...props}
   />
 ));
@@ -50,7 +51,9 @@ const NavigationMenuTrigger = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Trigger
     ref={ref}
-    className={cn(navigationMenuTriggerStyle(), 'group', className)}
+    style={{ backgroundColor: 'red', color: 'white' }}
+    className={cn(
+      navigationMenuTriggerStyle(), 'group', className)}
     {...props}
   >
     {children}{' '}

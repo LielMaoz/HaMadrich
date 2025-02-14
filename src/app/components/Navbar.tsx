@@ -4,16 +4,17 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { checkToken, checkTokenExpiration, decodeJWT } from '@/utils/jwtDecoder';
 import { googleLogout } from '@react-oauth/google';
+import SearchBar from './SearchBar';
+import Image from 'next/image';
 
 import {
   NavigationMenu,
+  NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
-  NavigationMenuList,
 } from '@/components/ui/navigation-menu';
 
 import { navigationMenuTriggerStyle } from '@/components/ui/navigation-menu';
-import { Search } from 'lucide-react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 // Reusable component for navigation links
@@ -73,28 +74,6 @@ const SignUp = () => {
       text="הרשמה"
       additionalClasses="focus:border-b-2 focus:border-white active:ring-2 active:ring-white"
     />
-  );
-};
-
-const SearchBar = () => {
-  return (
-    <div className="flex items-center space-x-reverse">
-      {/* Search button for small screens */}
-      <button className="block sm:hidden p-2 bg-gray-700 rounded-full">
-        <Search className="text-white w-5 h-5" />
-      </button>
-
-      {/* Search bar for large screens */}
-      <div className="hidden sm:flex items-center bg-gray-700 rounded-full px-4 py-2">
-        <Search className="text-white w-5 h-5" />
-        <input
-          type="text"
-          placeholder="חיפוש.."
-          dir="rtl"
-          className="px-4 py-2 bg-gray-700 text-white rounded-full w-60 focus:outline-none"
-        />
-      </div>
-    </div>
   );
 };
 
@@ -192,13 +171,15 @@ const NavBar = () => {
         setUserName('');
       }
     };
-  
+    
     checkTokenStatus(); //Initial check
+    
     const intervalId = setInterval(checkTokenStatus, 3000000); //Periodic checks every 5 minutes
 
     // Listen for changes in localStorage
     const handleStorageChange = () => checkTokenStatus();
     window.addEventListener('storage', handleStorageChange);
+
     return () => {
       clearInterval(intervalId);
       window.removeEventListener('storage', handleStorageChange);
@@ -220,16 +201,13 @@ const NavBar = () => {
       dir="rtl"
       style={{ position: 'sticky', top: 0, zIndex: 20 }}
     >
-      <NavigationMenu>
-        <NavigationMenuList
-          className="flex justify-between items-center w-full"
+      <NavigationMenu
+          className="items-center justify-start w-auto"
           dir="rtl"
         >
-          <div className="ml-2">
+          <NavigationMenuList className="flex items-center space-x-2 sm:space-x-4">
             <HomePage />
-          </div>
-
-          <div className="flex space-x-2 space-x-reverse">
+  
             {!isLoggedIn ? (
               <>
                 <SignIn />
@@ -243,10 +221,23 @@ const NavBar = () => {
                 handleLogout={handleLogout}
               />
             )}
-          </div>
           </NavigationMenuList>
-      </NavigationMenu>
-      <SearchBar />
+        </NavigationMenu>
+
+          <NavigationMenu className="flex items-center justify-start w-auto space-x-2 sm:space-x-4">
+            <Link href="/" passHref>
+              <Image
+              src="/images/hamadrich-logo.png"
+              alt="Logo"
+              width={110}
+              height={110}
+              quality={100}
+              className="hidden sm:block object-cover"
+              />
+            </Link>
+            <SearchBar isLoggedIn={isLoggedIn}/>
+          </NavigationMenu>
+
     </nav>
   );
 };
