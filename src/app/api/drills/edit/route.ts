@@ -1,8 +1,9 @@
 import pool from '@/app/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
-import { deleteFileFromDrive, uploadFileToDrive } from './googleDrive';
+import { deleteFileFromDrive, uploadFileToDrive } from '../../googleDrive';
+import { revalidateTag } from 'next/cache';
 
-async function isDrillExist(
+async function doesDrillExist(
   name: string,
   drillType: string,
   weapon: string,
@@ -36,7 +37,7 @@ export async function POST(req: NextRequest) {
   let rangeURL: string | null = null;
   let previewURL: string | null = null;
   try {
-    await isDrillExist(name, drillType, weapon);
+    await doesDrillExist(name, drillType, weapon);
 
     const rangeImg = drillInfo.get('range_img') as File;
     if (!rangeImg || rangeImg.size === 0) {
@@ -72,6 +73,9 @@ export async function POST(req: NextRequest) {
     ];
     const newDrill = await pool.query(query, values);
     const drill = newDrill.rows[0];
+
+    revalidateTag('drills');
+
     return NextResponse.json(
       { message: 'Drill created successfully', drill },
       { status: 200 }
@@ -136,11 +140,8 @@ export async function DELETE(req: NextRequest) {
     if (previewImg) {
       await deleteImg(previewImg);
     }
-    await pool.query(
-      `
-          DELETE FROM trainings WHERE id = $1;`,
-      [id]
-    );
+
+    revalidateTag('drills');
 
     return NextResponse.json(
       { message: 'Drill deleted successfully' },
@@ -238,6 +239,9 @@ export async function PUT(req: NextRequest) {
     if (previewURL && oldPreviewImgURL) {
       await deleteImg(oldPreviewImgURL);
     }
+
+    revalidateTag('drills');
+
     return NextResponse.json(
       { message: 'Drill updated successfully', newDrill },
       { status: 200 }
@@ -255,7 +259,7 @@ export async function PATCH(req: NextRequest) {
     const drillType = updatedDrill.drill_type;
     const weapon = updatedDrill.weapon_type;
     const id = updatedDrill.id;
-    await isDrillExist(name, drillType, weapon, id);
+    await doesDrillExist(name, drillType, weapon, id);
     const query = `
           update trainings set 
               training_name = $1,
@@ -284,6 +288,9 @@ export async function PATCH(req: NextRequest) {
       id,
     ];
     const newDrill = await pool.query(query, values);
+
+    revalidateTag('drills');
+
     return NextResponse.json(
       { message: 'Drill updated successfully', newDrill },
       { status: 200 }

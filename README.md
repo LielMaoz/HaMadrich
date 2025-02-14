@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# HaMadrich: Shooting Training Management System
 
-First, run the development server:
+**HaMadrich** is a platform designed to optimize training for soldiers, security forces, and commanders. It provides access to professional resources, customizable shooting ranges, medical training materials, and skill development tools, all within a centralized and intuitive system.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💡 Project Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Purpose
+- **Centralization**: Consolidates scattered professional content from multiple sources into one accessible system.
+- **Accessibility**: Provides a comprehensive solution for training in remote or instructor-free scenarios.
+- **Enhanced Training**: Allows users to manage and execute training effectively, ensuring professional-quality results.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🌟 Key Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Professional Content**: Access specialized training and medical materials.
+- **User-Friendly Interface**: Simplified registration, easy-to-download targets, and intuitive navigation.
+- **Admin Controls**: Manage and customize shooting drills, with role-based access for administrators.
+- **Security**: Implemented JWT authentication and two-step email verification.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Technology Stack
 
-## Deploy on Vercel
+Frontend: Next.js, TypeScript, Tailwind CSS, shadcn.ui.
+Backend: PostgreSQL, JWT authentication, Google Drive integration.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔑 User Roles
+
+1. **Regular User**:
+- Can register and log in.
+- Access professional and medical content.
+- Download target templates based on shooting range.
+
+2. **System Administrator**:
+- Can register and log in.
+- Has full access to all training materials and professional content.
+- Can download and use target images.
+- Can add, edit, or delete shooting drills and professional content.
+- Can manage content visibility for regular users.
+
+---
+
+## 🚀 Getting Started
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the Application:
+   ```bash
+   npm run dev
+   ```
+4. Access the application at `http://localhost:3000`.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions to improve **HaMadrich**! 
+To contribute, fork the repository, create a new branch, and submit a pull request.
+
+---
+
+## 📣 Support
+
+For inquiries, feedback, or support, please contact the development team:
+- **Ilay Arugi**
+- **Igal Rubin**
+- **Liel Maoz**
+- **Ayala Or**
+- **Itay Hatan**
+- **Re'em Mor**
+
+---
+
+We’re excited to see **HaMadrich** revolutionize shooting training and skill development!

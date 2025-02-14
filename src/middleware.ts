@@ -29,5 +29,9 @@ export async function middleware(request: Request) {
 
 // Protect
 export const config = {
-  matcher: ['/api/drills/edit'],
+  matcher: [
+    '/api/drills/edit',
+    '/api/professionalContent/edit',
+    '/api/revalidate',
+  ],
 };
