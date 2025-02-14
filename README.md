@@ -25,9 +25,9 @@
 
 ## 🛠️ Technology Stack
 
-Frontend: Next.js, TypeScript, Tailwind CSS, shadcn.ui.
-Backend: PostgreSQL, JWT authentication, Google Drive integration.
-
+- Frontend: Next.js, TypeScript, Tailwind CSS, shadcn.ui.
+- Backend: PostgreSQL, JWT authentication, Google Drive integration.
+  
 ---
 
 ## 🔑 User Roles
